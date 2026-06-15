@@ -16,7 +16,9 @@ $router->get('/', function () {
 });
 
 $router->get('/accueil', function () {
-    require_once __DIR__ . "/../Views/Pages/homepage.php";
+    $title = 'Accueil';
+    $view = 'homepage';
+    require_once __DIR__ . "/../Views/Layouts/index.php";
 });
 
 $router->run();
