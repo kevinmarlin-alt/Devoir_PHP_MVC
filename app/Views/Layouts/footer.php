@@ -1,5 +1,3 @@
-    <footer>
-        <p>2026 - CENEF - MVC PHP</p>
-    </footer>
-</body>
-</html>
+<footer>
+    <p>2026 - CENEF - MVC PHP</p>
+</footer>
