@@ -20,4 +20,12 @@ class Employee {
     public function getPassword(): string {
         return $this->password;
     }
+
+    public function getFullname(): string {
+        return $this->firstname . " " . $this->lastname;
+    }
+
+    public function getRole(): string {
+        return $this->role;
+    }
 }

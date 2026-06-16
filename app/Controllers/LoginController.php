@@ -19,16 +19,17 @@ class LoginController extends Controller {
         
         $employee = (new EmployeeModel)->findEmployeeByEmail($email);
         $passwordMatch = password_verify($password, $employee->getPassword());
-        //$passwordMatch = $password === $employee->getPassword();
-        var_dump($password, $employee->getPassword(), $passwordMatch);
+
         if(!$passwordMatch || !$employee) {
             $error = "Email ou mot de passe incorrect !";
             $this->render('Connexion', 'login', compact('error'));
             exit;
         }
             
-        $_SESSION['user'] = $employee->getId();
-        var_dump($_SESSION);
+        $_SESSION['user'] = [
+            'id' => $employee->getId(),
+            'role' => $employee->getRole()
+        ];
     
         header('Location: /');
     }

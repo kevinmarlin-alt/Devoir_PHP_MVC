@@ -36,7 +36,35 @@ class EmployeeModel {
             firstname: $result['firstname'],
             phone: $result['phone'],
             email: $result['email'],
-            password: $result['passeword'] ?? "",
+            password: $result['passeword'],
+            role: $result['role']
+        );
+    }
+
+    public function findEmployeeById(int $id) {
+        $query = $this->pdo->prepare(
+            "SELECT * FROM employees 
+            WHERE id = :id
+            "
+        );
+
+        $query->execute([
+            ":id" => $id
+        ]);
+
+        $result = $query->fetch();
+
+        if(!$result) {
+            return null;
+        }
+
+        return new Employee(
+            id: $result['id'],
+            lastname: $result['lastname'],
+            firstname: $result['firstname'],
+            phone: $result['phone'],
+            email: $result['email'],
+            password: $result['passeword'],
             role: $result['role']
         );
     }
