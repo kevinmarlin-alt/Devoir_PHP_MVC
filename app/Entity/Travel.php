@@ -4,7 +4,7 @@ namespace App\Entity;
 use DateTime;
 
 class Travel {
-
+    
     public function __construct(
         private int $id,
         private string $departure_agency,
@@ -15,6 +15,10 @@ class Travel {
         private int $employeeId
     ) {
 
+    }
+
+    public function setId(int $id) {
+        $this->id = $id;
     }
 
     public function getId(): int {

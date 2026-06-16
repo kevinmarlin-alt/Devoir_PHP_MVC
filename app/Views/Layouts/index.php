@@ -11,7 +11,7 @@
     <div class="container-lg">
         <?php require __DIR__ . "/header.php" ?>
         
-        <main>
+        <main class="container-lg">
             <?php require __DIR__ . "/../" . $view . ".php" ?>
         </main>
             

@@ -2,6 +2,7 @@
 
 use App\Controllers\HomepageController;
 use App\Controllers\LoginController;
+use App\Controllers\TravelsControllers;
 use App\Models\EmployeeModel;
 use Buki\Router\Router;
 
@@ -28,6 +29,18 @@ $router->group('/login', function($router){
     
     $router->post('/', function() {
         (new LoginController)->login();
+    });
+});
+
+// Routes of travels
+$router->group(('/travels'), function($router) {
+
+    $router->get('/create', function() {
+        (new TravelsControllers)->createIndex();
+    });
+
+    $router->post('/create', function() {
+        (new TravelsControllers)->createNewTravel();
     });
 });
 
