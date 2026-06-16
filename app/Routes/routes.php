@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\HomepageController;
 use Buki\Router\Router;
 
 $router = new Router();
@@ -16,9 +17,7 @@ $router->get('/', function () {
 });
 
 $router->get('/accueil', function () {
-    $title = 'Accueil';
-    $view = 'homepage';
-    require_once __DIR__ . "/../Views/Layouts/index.php";
+    (new HomepageController)->index();
 });
 
 $router->run();

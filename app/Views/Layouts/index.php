@@ -8,13 +8,16 @@
     <title>Touche pas au klaxon - <?= $title ?></title>
 </head>
 <body>
-    <?php require __DIR__ . "/header.php" ?>
-    
-    <main>
-        <?php require __DIR__ . "/../" . $view . ".php" ?>
-    </main>
+    <div class="container-lg">
+        <?php require __DIR__ . "/header.php" ?>
         
-    <?php require __DIR__ . "/footer.php" ?>
+        <main>
+            <?php require __DIR__ . "/../" . $view . ".php" ?>
+        </main>
+            
+        <?php require __DIR__ . "/footer.php" ?>
+
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
