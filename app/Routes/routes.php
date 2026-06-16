@@ -1,9 +1,13 @@
 <?php
 
+use App\Middlewares\AuthMiddleware;
+
 use App\Controllers\HomepageController;
 use App\Controllers\LoginController;
 use App\Controllers\TravelsControllers;
+
 use App\Models\EmployeeModel;
+
 use Buki\Router\Router;
 
 $router = new Router();
@@ -23,7 +27,10 @@ $router->get('/', function () {
 $router->group('/login', function($router){
     
     $router->get('/', function() {
-        //(new EmployeeModel)->addPassword();
+        if(isset($_SESSION['user'])) {
+            header('Location: /');
+            exit;
+        }
         (new LoginController)->index();
     });
     
@@ -36,10 +43,12 @@ $router->group('/login', function($router){
 $router->group(('/travels'), function($router) {
 
     $router->get('/create', function() {
+        AuthMiddleware::handle();
         (new TravelsControllers)->createIndex();
     });
 
     $router->post('/create', function() {
+        AuthMiddleware::handle();
         (new TravelsControllers)->createNewTravel();
     });
 });
