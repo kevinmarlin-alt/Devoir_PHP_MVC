@@ -21,12 +21,38 @@ class TravelsControllers extends Controller {
 
     public function createIndex() {
         $agencies = (new AgenciesModel)->findAllAgencies();
-        $employee = (new EmployeeModel)->findEmployeeById($_SESSION['user']['id']);
+        $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
         $this->render(
             'Créer un trajet', 
-            'travels/create', 
+            'Travels/create', 
             compact('agencies', 'employee')
         );
+    }
+
+    public function updateIndex(int $id) {
+        $agencies = (new AgenciesModel)->findAllAgencies();
+        $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
+        $result = $this->getTravelById($id);
+        $travel = new Travel(
+            id: $result['id'],
+            departure_agency: $result['departure_agency'],
+            departure_at: $result['departure_at'],
+            arrival_agency: $result['arrival_agency'],
+            arrival_at: $result['arrival_at'],
+            seats_available: $result['seats_available'],
+            employee_id: $result['employee_id'],
+            seats_total: $result['seats_total']
+        );
+ 
+        $this->render(
+            'Mettre a jour un trajet',
+            'Travels/update',
+            compact('employee', 'travel', 'agencies')
+        );
+    }
+
+    public function updateTravel(int $id, mixed $data) {
+        $this->travelsModel->updateTravel($id, $data);
     }
 
     public function createNewTravel(): void {
@@ -41,7 +67,7 @@ class TravelsControllers extends Controller {
     public function getAvailableTravels(): array {
     
         $result = $this->travelsModel->findAllTravelsAvailable();
-
+        
         if(!$result) {
             return [];          
         }
@@ -51,11 +77,12 @@ class TravelsControllers extends Controller {
             array_push($travels, new Travel(
                 id: $travel['id'],
                 departure_agency: $travel['departure_agency'],
-                departure_datetime: $travel['departure_at'],
+                departure_at: $travel['departure_at'],
                 arrival_agency: $travel['arrival_agency'],
-                arrival_datetime: $travel['arrival_at'],
+                arrival_at: $travel['arrival_at'],
                 seats_available: $travel['seats_available'],
-                employeeId: $travel['employee_id']
+                seats_total: $travel['seats_total'],
+                employee_id: $travel['employee_id']
             ));
             
         };

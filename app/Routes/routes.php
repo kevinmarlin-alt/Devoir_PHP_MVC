@@ -9,6 +9,7 @@ use App\Controllers\TravelsControllers;
 use App\Models\EmployeeModel;
 
 use Buki\Router\Router;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $router = new Router();
@@ -64,6 +65,18 @@ $router->group(('/travels'), function($router) {
     $router->post('/create', function() {
         AuthMiddleware::handle();
         (new TravelsControllers)->createNewTravel();
+    });
+
+    $router->get('/update/', function () {
+        AuthMiddleware::handle();
+        (new TravelsControllers)->updateIndex($_GET['id']);
+    });
+
+    $router->put('/update/:id', function (int $id, Request $request) {
+        AuthMiddleware::handle();
+        $data = json_decode($request->getContent(), true);
+        (new TravelsControllers)->updateTravel($id, $data);
+        
     });
 });
 
