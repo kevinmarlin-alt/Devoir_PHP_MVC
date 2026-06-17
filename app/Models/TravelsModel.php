@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Core\Database;
 use App\Entity\Travel;
 use DateInterval;
+use DateTime;
 use PDO;
 
 class TravelsModel {
@@ -38,16 +39,6 @@ class TravelsModel {
         $query->execute(['id' => $id]);
 
         return $query->fetch();
-
-        return new Travel(
-            id: $travel['id'],
-            departure_agency: $travel['departure_agency'],
-            departure_datetime: $travel['departure_at'],
-            arrival_agency: $travel['arrival_agency'],
-            arrival_datetime: $travel['arrival_at'],
-            seats_available: $travel['seats_available'],
-            employeeId: $travel['employee_id']
-        );
     }
 
     public function findAllTravelsAvailable() {
@@ -70,8 +61,14 @@ class TravelsModel {
             INNER JOIN agencies arr
                 ON arr.id = t.arrival_agency_id
 
-            WHERE t.seats_available > 0 AND t.departure_at > NOW()
-            ORDER BY t.departure_at ASC"
+            WHERE 
+                t.seats_available > 0 
+                AND 
+                t.departure_at > NOW()
+
+            ORDER BY 
+                t.departure_at 
+                ASC"
         );
 
         $query->execute();
@@ -109,5 +106,31 @@ class TravelsModel {
             'seats_available' => $_POST['seats_total'],
             'employee_id' => $_POST['employee_id'],
         ]);
+    }
+
+    public function updateTravel(int $id, mixed $data) {
+        $query = $this->pdo->prepare(
+            "UPDATE 
+                travels 
+            SET 
+                departure_agency_id = :departure_agency_id,
+                departure_at = :departure_at,
+                arrival_agency_id = :arrival_agency_id,
+                arrival_at = :arrival_at,
+                seats_available = :seats_available,
+                seats_total = :seats_total
+            WHERE 
+                id = :id"
+        );
+
+        $query->execute([
+            'id' => $id,
+            'departure_agency_id' => $data['departure_agency_id'],
+            'departure_at' => $data['departure_date'] . " " . $data['departure_time'] . ":00",
+            'arrival_agency_id' => $data['arrival_agency_id'],
+            'arrival_at' => $data['arrival_date'] . " " . $data['arrival_time']. ":00",
+            'seats_available' => $data['seats_available'],
+            'seats_total' => $data['seats_total']
+        ]); 
     }
 }

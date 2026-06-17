@@ -1,10 +1,11 @@
+<script src="/assets/javascript/travel.update.js" type="text/javascript" defer></script>
 <nav class="mb-4">
     <a href="/">Accueil</a>
 </nav>
 
-<h2 class="mb-4">Créer un nouveau trajet</h2>
+<h2 class="mb-4">Mettre à jour le trajet</h2>
 
-<form action="/travels/create" method="POST">
+<form action="#" method="">
     <div class="d-flex gap-4 mb-4">
         <fieldset class="w-50">
             <legend>Informations du trajet</legend>
@@ -12,37 +13,57 @@
                 <label class="form-label" for="departure_agency_id">Départ</label><br>
                 <select class="form-control" name="departure_agency_id" id="departure_agency_id" required >
                     <?php foreach($agencies as $agency): ?>
-                        <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                        <?php if($travel->getDepartureAgency() === $agency->getCity()): ?>
+                            <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>
+                        <?php else: ?>
+                            <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="d-flex gap-2 mb-3">
                 <div class="w-50">
                     <label class="form-label" for="departure_date">Date</label><br>
-                    <input class="form-control" type="date" name="departure_date" id="departure_date">
+                    <input class="form-control" type="date" name="departure_date" id="departure_date" value="<?= $travel->getInputDepartureDate() ?>">
                 </div>
                 <div class="w-50">
                     <label class="form-label" for="departure_time">Heure</label><br>
-                    <input class="form-control" type="time" name="departure_time" id="departure_time">
+                    <input class="form-control" type="time" name="departure_time" id="departure_time" value="<?= $travel->getDepartureTime() ?>">
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="arrival_agency_id">Départ</label><br>
                 <select class="form-control"  name="arrival_agency_id" id="arrival_agency_id" required >
                     <?php foreach($agencies as $agency): ?>
-                        <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                        <?php if($travel->getArrivalAgency() === $agency->getCity()): ?>
+                            <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>
+                        <?php else: ?>
+                            <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="d-flex gap-2 mb-3">
                 <div class="w-50">
                     <label class="form-label" for="arrival_date">Date</label><br>
-                    <input class="form-control" type="date" name="arrival_date" id="arrival_date">
+                    <input class="form-control" type="date" name="arrival_date" id="arrival_date" value="<?= $travel->getInputArrivalDate() ?>">
                 </div>
                 <div class="w-50">
                     <label class="form-label" for="arrival_time">Heure</label><br>
-                    <input class="form-control" type="time" name="arrival_time" id="arrival_time">
+                    <input class="form-control" type="time" name="arrival_time" id="arrival_time" value="<?= $travel->getArrivalTime() ?>">
                 </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="seats_available">Nombre de places disponible</label><br>
+                <input
+                    class="form-control"
+                    type="number"
+                    name="seats_available"
+                    id="seats_available"
+                    min="0"
+                    value="<?= $travel->getSeatsAvailable() ?>"
+                    required
+                    >
             </div>
             <div>
                 <label class="form-label" for="seats_total">Nombre total de places</label><br>
@@ -52,15 +73,16 @@
                     name="seats_total"
                     id="seats_total"
                     min="0"
+                    value="<?= $travel->getSeatsTotal() ?>"
                     required
                     >
             </div>
             <input
                 class="form-control"
                 type="hidden"
-                name="employee_id"
-                id="employee_id"
-                value="<?= $_SESSION['user']['id'] ?>"
+                name="id"
+                id="id"
+                value="<?= $travel->getId() ?>"
                 >
         </fieldset>
         <fieldset class="w-50">
@@ -108,8 +130,15 @@
                     disabled
                     >
             </div>
+            <input
+                class="form-control"
+                type="hidden"
+                name="employee_id"
+                id="employee_id"
+                value="<?= $_SESSION['user']['id'] ?>"
+                >
             
         </fieldset>
     </div>
-    <input class="btn btn-primary" type="submit" value="Ajouter">
+    <input class="btn btn-primary" type="submit" value="Mettre à jour">
 </form>
