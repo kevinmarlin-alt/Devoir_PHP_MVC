@@ -133,4 +133,12 @@ class TravelsModel {
             'seats_total' => $data['seats_total']
         ]); 
     }
+
+    public function deleteOne(int $id): void {
+        $query = $this->pdo->prepare(
+            "DELETE FROM travels WHERE id = :id"
+        );
+
+        $query->execute(['id' => $id]);
+    }
 }
