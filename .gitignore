@@ -3,3 +3,6 @@
 
 # Variable environment
 env.php
+
+# other
+.DS_Store
