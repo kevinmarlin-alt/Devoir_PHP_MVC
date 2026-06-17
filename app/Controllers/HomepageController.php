@@ -2,15 +2,20 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Models\EmployeeModel;
 
 class HomepageController extends Controller {
 
     public function index() {
         $travels = (new TravelsControllers)->getAvailableTravels();
+        $employee = null;
+        if(isset($_SESSION['user'])) {
+            $employee = (new EmployeeModel)->findEmployeeById($_SESSION['user']['id']);
+        }
         $this->render(
             title:'Accueil',
             view: 'homepage',
-            vars: compact('travels')
+            vars: compact('travels', 'employee')
         );
     }
 

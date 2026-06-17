@@ -41,4 +41,36 @@ class TravelsModel {
 
         return $query->fetchAll();
     }
+
+    public function addTravel(string $departure_at, string $arrival_at) {
+        $query = $this->pdo->prepare(
+            "INSERT INTO travels (
+                departure_agency_id,
+                arrival_agency_id,
+                departure_at,
+                arrival_at,
+                seats_total,
+                seats_available,
+                employee_id
+            ) VALUES (
+                :departure_agency_id,
+                :arrival_agency_id,
+                :departure_at,
+                :arrival_at,
+                :seats_total,
+                :seats_total,
+                :employee_id
+            )"
+        );
+
+        $query->execute([
+            'departure_agency_id' => $_POST['departure_agency_id'],
+            'arrival_agency_id' => $_POST['arrival_agency_id'],
+            'departure_at' => $departure_at,
+            'arrival_at' => $arrival_at,
+            'seats_total' => $_POST['seats_total'],
+            'seats_available' => $_POST['seats_total'],
+            'employee_id' => $_POST['employee_id'],
+        ]);
+    }
 }

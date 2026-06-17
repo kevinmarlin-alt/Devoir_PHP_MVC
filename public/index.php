@@ -8,4 +8,6 @@ ini_set('error_log', 'php://stderr');
 
 require __DIR__ . '/../vendor/autoload.php';
 
+session_start();
+
 require __DIR__ . "/../app/Routes/routes.php";
