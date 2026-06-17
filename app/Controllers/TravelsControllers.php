@@ -88,4 +88,8 @@ class TravelsControllers extends Controller {
         };
         return $travels;
     }
+
+    public function deleteTravel(int $id): void {
+        $this->travelsModel->deleteOne($id);
+    }
 }

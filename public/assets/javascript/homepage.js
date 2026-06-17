@@ -1,7 +1,19 @@
 const readBtnAll = document.querySelectorAll('.table__icon--read');
+const deleteBtnAll = document.querySelectorAll('.table__icon--delete');
 const modal = document.querySelector('.modal');
 
 readBtnAll.forEach(btn => btn.addEventListener('click', showModalOnClick));
+deleteBtnAll.forEach(btn => btn.addEventListener('click', handleDelete));
+
+async function handleDelete(e) {
+    e.preventDefault();
+    idTravel = e.target.closest('tr').getAttribute('data-id-travel')
+    await fetch(`/travels/delete/${idTravel}`, {
+        method: 'DELETE'
+    })
+
+    window.location.reload();
+}
 
 async function showModalOnClick(e) {
     e.preventDefault();
@@ -32,6 +44,4 @@ async function showModalOnClick(e) {
     modal.querySelector('#modal_email').innerHTML = employee.email;
     modal.querySelector('#modal_email').href = `mailto:${employee.email}`;
     modal.querySelector('#modal_total_seats').innerHTML = travel.seats_total;
-
-
 }

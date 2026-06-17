@@ -78,6 +78,11 @@ $router->group(('/travels'), function($router) {
         (new TravelsControllers)->updateTravel($id, $data);
         
     });
+
+    $router->delete('/delete/:id', function(int $id) {
+        AuthMiddleware::handle();
+        (new TravelsControllers)->deleteTravel($id);
+    });
 });
 
 $router->get('/accueil', function () {
