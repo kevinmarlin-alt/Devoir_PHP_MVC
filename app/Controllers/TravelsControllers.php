@@ -15,6 +15,10 @@ class TravelsControllers extends Controller {
         $this->travelsModel = new TravelsModel();
     }
 
+    public function getTravelById(int $idTravel) {
+        return (new TravelsModel)->findTravelById($idTravel);
+    }
+
     public function createIndex() {
         $agencies = (new AgenciesModel)->findAllAgencies();
         $employee = (new EmployeeModel)->findEmployeeById($_SESSION['user']['id']);

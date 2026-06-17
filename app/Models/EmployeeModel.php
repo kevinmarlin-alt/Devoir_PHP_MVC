@@ -52,21 +52,8 @@ class EmployeeModel {
             ":id" => $id
         ]);
 
-        $result = $query->fetch();
+        return $query->fetch();
 
-        if(!$result) {
-            return null;
-        }
-
-        return new Employee(
-            id: $result['id'],
-            lastname: $result['lastname'],
-            firstname: $result['firstname'],
-            phone: $result['phone'],
-            email: $result['email'],
-            password: $result['passeword'],
-            role: $result['role']
-        );
     }
 
     public function addPassword() {

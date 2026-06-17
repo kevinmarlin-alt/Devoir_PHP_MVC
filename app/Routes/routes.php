@@ -9,6 +9,7 @@ use App\Controllers\TravelsControllers;
 use App\Models\EmployeeModel;
 
 use Buki\Router\Router;
+use Symfony\Component\HttpFoundation\Response;
 
 $router = new Router();
 
@@ -39,8 +40,21 @@ $router->group('/login', function($router){
     });
 });
 
+// Routes of employees
+$router->group('/employees', function ($router) {
+
+    $router->get('/:id', function(int $id, Response $response) {
+        return json_encode((new EmployeeModel)->findEmployeeById($id));
+    });
+});
+
 // Routes of travels
 $router->group(('/travels'), function($router) {
+
+    $router->get('/:id', function(int $id, Response $response) {
+        AuthMiddleware::handle();
+        return json_encode((new TravelsControllers)->getTravelById($id));
+    });
 
     $router->get('/create', function() {
         AuthMiddleware::handle();

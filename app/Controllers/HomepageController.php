@@ -10,7 +10,7 @@ class HomepageController extends Controller {
         $travels = (new TravelsControllers)->getAvailableTravels();
         $employee = null;
         if(isset($_SESSION['user'])) {
-            $employee = (new EmployeeModel)->findEmployeeById($_SESSION['user']['id']);
+            $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
         }
         $this->render(
             title:'Accueil',

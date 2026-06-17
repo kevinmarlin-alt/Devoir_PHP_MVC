@@ -1,0 +1,37 @@
+const readBtnAll = document.querySelectorAll('.table__icon--read');
+const modal = document.querySelector('.modal');
+
+readBtnAll.forEach(btn => btn.addEventListener('click', showModalOnClick));
+
+async function showModalOnClick(e) {
+    e.preventDefault();
+    idTravel = e.target.closest('tr').getAttribute('data-id-travel')
+    const travelResponse = await fetch(`/travels/${idTravel}`, {
+        method: 'GET'
+    })
+    
+    if(!travelResponse.ok) {
+        return
+    }
+    travel = await travelResponse.json()
+    
+    const employeeResponse = await fetch(`/employees/${travel.employee_id}`, {
+        method: 'GET'
+    })
+    
+    if(!employeeResponse.ok) {
+        return
+    }
+
+    employee = await employeeResponse.json()
+    console.log(employee);
+
+    modal.querySelector('#modal_owner').innerHTML = `${employee.firstname} ${employee.lastname}`;
+    modal.querySelector('#modal_phone').innerHTML = employee.phone;
+    modal.querySelector('#modal_phone').href = `tel:+${employee.email}`;
+    modal.querySelector('#modal_email').innerHTML = employee.email;
+    modal.querySelector('#modal_email').href = `mailto:${employee.email}`;
+    modal.querySelector('#modal_total_seats').innerHTML = travel.seats_total;
+
+
+}

@@ -13,6 +13,43 @@ class TravelsModel {
         $this->pdo = Database::getUsersConnection();
     }
 
+    public function findTravelById(int $id) {
+        $query = $this->pdo->prepare(
+            "SELECT 
+                t.id,
+                dep.city AS departure_agency,
+                t.departure_at,
+                arr.city AS arrival_agency,
+                t.arrival_at,
+                t.seats_available,
+                t.seats_total,
+                t.employee_id
+            FROM travels t
+
+            INNER JOIN agencies dep
+                ON dep.id = t.departure_agency_id
+
+            INNER JOIN agencies arr
+                ON arr.id = t.arrival_agency_id 
+            
+            WHERE t.id = :id"
+        );
+
+        $query->execute(['id' => $id]);
+
+        return $query->fetch();
+
+        return new Travel(
+            id: $travel['id'],
+            departure_agency: $travel['departure_agency'],
+            departure_datetime: $travel['departure_at'],
+            arrival_agency: $travel['arrival_agency'],
+            arrival_datetime: $travel['arrival_at'],
+            seats_available: $travel['seats_available'],
+            employeeId: $travel['employee_id']
+        );
+    }
+
     public function findAllTravelsAvailable() {
         
         $query = $this->pdo->prepare(
