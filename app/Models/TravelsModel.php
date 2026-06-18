@@ -1,4 +1,12 @@
 <?php
+/**
+ * Devoir PHP MCV
+ * Site intranet pour la gestion de covoiturage des trajets entre agences
+ *
+ * @author Kevin Marlin
+ * @version 1.0
+ */
+
 namespace App\Models;
 
 use App\Core\Database;
@@ -6,14 +14,32 @@ use App\Entity\Travel;
 use DateTime;
 use PDO;
 
+/**
+ * Modèle de gestion des trajets
+ */
 class TravelsModel {
+
+    /**
+     * Connexion PDO
+     * 
+     * @var PDO $pdo
+     */
     private PDO $pdo;
 
+    /**
+     * Initialise le modèle
+     */
     public function __construct() {
         $this->pdo = Database::getConnection();
     }
 
-    public function findTravelById(int $id) {
+    /**
+     * Recherche un trajet à partir de son identifiant
+     * 
+     * @param int $id
+     * @return Travel|null
+     */
+    public function findTravelById(int $id): Travel|null {
         $query = $this->pdo->prepare(
             "SELECT 
                 t.id,
@@ -39,6 +65,10 @@ class TravelsModel {
 
         $result = $query->fetch();
 
+        if(!$result) {
+            return null;
+        }
+
         return new Travel(
             id: $result['id'],
             departure_agency: $result['departure_agency'],
@@ -51,6 +81,13 @@ class TravelsModel {
         );
     }
 
+    /**
+     * Recherche tous les trajets disponible en fonction du nombre de places et de la date
+     * 
+     * Retourne tous les trajets qui sont encore disponible à la date et heure actuelle et uniquement les trajets qui disposent encore de places disponible.
+     * 
+     * @return Travel[]|null
+     */
     public function findAllTravelsAvailable(): array|null {
         
         $query = $this->pdo->prepare(
@@ -106,7 +143,13 @@ class TravelsModel {
         return $travels;
     }
 
-    public function addTravel(string $departure_at, string $arrival_at) {
+    /**
+     * Crée un trajet 
+     * 
+     * @param mixed $data
+     * @return bool
+     */
+    public function addTravel(mixed $data): bool {
         $query = $this->pdo->prepare(
             "INSERT INTO travels (
                 departure_agency_id,
@@ -127,18 +170,25 @@ class TravelsModel {
             )"
         );
 
-        $query->execute([
-            'departure_agency_id' => $_POST['departure_agency_id'],
-            'arrival_agency_id' => $_POST['arrival_agency_id'],
-            'departure_at' => $departure_at,
-            'arrival_at' => $arrival_at,
-            'seats_total' => $_POST['seats_total'],
-            'seats_available' => $_POST['seats_total'],
-            'employee_id' => $_POST['employee_id'],
+        return $query->execute([
+            'departure_agency_id' => $data['departure_agency_id'],
+            'departure_at' => $data['departure_date'] . " " . $data['departure_time'] . ":00",
+            'arrival_agency_id' => $data['arrival_agency_id'],
+            'arrival_at' => $data['arrival_date'] . " " . $data['arrival_time']. ":00",
+            'seats_total' => $data['seats_total'],
+            'seats_available' => $data['seats_total'],
+            'employee_id' => $data['employee_id'],
         ]);
     }
 
-    public function updateTravel(int $id, mixed $data) {
+    /**
+     * Met à jour un trajet
+     * 
+     * @param int $id
+     * @param mixed $data
+     * @return bool
+     */
+    public function updateTravel(int $id, mixed $data): bool {
         $query = $this->pdo->prepare(
             "UPDATE 
                 travels 
@@ -153,7 +203,7 @@ class TravelsModel {
                 id = :id"
         );
 
-        $query->execute([
+        return $query->execute([
             'id' => $id,
             'departure_agency_id' => $data['departure_agency_id'],
             'departure_at' => $data['departure_date'] . " " . $data['departure_time'] . ":00",
@@ -164,14 +214,25 @@ class TravelsModel {
         ]); 
     }
 
-    public function deleteOne(int $id): void {
+    /**
+     * Supprime un trajet
+     * 
+     * @param int $id
+     * @return bool
+     */
+    public function deleteOne(int $id): bool {
         $query = $this->pdo->prepare(
             "DELETE FROM travels WHERE id = :id"
         );
 
-        $query->execute(['id' => $id]);
+        return $query->execute(['id' => $id]);
     }
 
+    /**
+     * Recherche tous les trajets
+     * 
+     * @return Travel[]|null
+     */
     public function findAllTravels(): array|null {
         $query = $this->pdo->prepare(
             "SELECT 

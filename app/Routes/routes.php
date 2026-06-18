@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 $router = new Router();
 
+/**
+ * Route d'entrée du site internet et redirection vers l'acceuil
+ */
 $router->get('/', function () {
     if(!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
         $uri = 'https://';
@@ -27,7 +30,9 @@ $router->get('/', function () {
     header('Location: '.$uri.'/accueil');
 });
 
-// Routes of dashboard
+/**
+ * Routes de gestion du tableau de bord
+ */
 $router->group('/dashboard', function($router) {
 
     $router->get('/', function () {
@@ -36,7 +41,9 @@ $router->group('/dashboard', function($router) {
     });
 });
 
-// Routes of login
+/**
+ * Routes de gestion de connexion
+ */
 $router->group('/login', function($router){
     
     $router->get('/', function() {
@@ -57,7 +64,9 @@ $router->get('/logout', function() {
     (new LoginController)->logout();
 });
 
-// Routes of employees
+/**
+ * Routes de gestion des employés
+ */
 $router->group('/employees', function ($router) {
 
     $router->get('/:id', function(int $id, Response $response) {
@@ -66,7 +75,9 @@ $router->group('/employees', function ($router) {
     });
 });
 
-// Routes of agencies
+/**
+ * Routes de gestion des agences
+ */
 $router->group('/agencies', function($router) {
 
     $router->post('/create', function() {
@@ -77,7 +88,9 @@ $router->group('/agencies', function($router) {
     });
 });
 
-// Routes of travels
+/**
+ * Routes de gestion des trajets
+ */
 $router->group(('/travels'), function($router) {
 
     $router->get('/:id', function(int $id, Response $response) {
@@ -113,6 +126,9 @@ $router->group(('/travels'), function($router) {
     });
 });
 
+/**
+ * Routes publiques
+ */
 $router->get('/accueil', function () {
     (new HomepageController)->index();
 });

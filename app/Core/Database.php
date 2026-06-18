@@ -4,10 +4,22 @@ namespace App\Core;
 
 use PDO;
 
-
+/**
+ * Gestionnaire de connexion à la base de données.
+ */
 class Database {
+    /**
+     * Instance PDO partagée.
+     *
+     * @var PDO
+     */
     private static PDO $pdo;
 
+    /**
+     * Retourne une connexion adaptée au rôle connecté.
+     * 
+     * @return PDO
+     */
     public static function getConnection(): PDO {
         $usersDB = require __DIR__ . "/../env.php";
 
@@ -27,24 +39,6 @@ class Database {
             ),
                 $profil['user'],
                 $profil['password'],
-                [
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-                ]
-        );
-        return self::$pdo;
-    }
-
-    public static function getUsersConnection(): PDO {
-        $usersDB = require __DIR__ . "/../env.php";
-        $users = $usersDB['users'];
-        self::$pdo = new PDO(
-            sprintf(
-                'mysql:host=%s;dbname=%s;charset=utf8mb4',
-                $users['host'],
-                $users['dbname']
-            ),
-                $users['user'],
-                $users['password'],
                 [
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                 ]

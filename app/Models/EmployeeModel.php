@@ -1,19 +1,44 @@
 <?php
+/**
+ * Devoir PHP MCV
+ * Site intranet pour la gestion de covoiturage des trajets entre agences
+ *
+ * @author Kevin Marlin
+ * @version 1.0
+ */
+
 namespace App\Models;
 
 use App\Core\Database;
 use App\Entity\Employee;
 use PDO;
 
+/**
+ * Modèle de gestion des employés
+ */
 class EmployeeModel {
+
+    /**
+     * Connexion PDO
+     * 
+     * @var PDO
+     */
     private PDO $pdo;
 
-    public function __construct(
-    ) {
+    /**
+     * Initialise le modèle
+     */
+    public function __construct() {
         $this->pdo = Database::getConnection();
     }
 
-    public function findEmployeeByEmail(string $email) {
+    /**
+     * Recherche un employé a partir de son email
+     * 
+     * @param string $email
+     * @return Employee|null
+     */
+    public function findEmployeeByEmail(string $email): Employee|null {
         $query = $this->pdo->prepare(
             "SELECT * FROM employees 
             WHERE email = :email
@@ -41,7 +66,13 @@ class EmployeeModel {
         );
     }
 
-    public function findEmployeeById(int $id) {
+    /**
+     * Recherche un employé a partir de son identifiant
+     * 
+     * @param int $id
+     * @return Employee|null
+     */
+    public function findEmployeeById(int $id): Employee|null {
         $query = $this->pdo->prepare(
             "SELECT * FROM employees 
             WHERE id = :id
@@ -70,6 +101,11 @@ class EmployeeModel {
 
     }
 
+    /**
+     * Recherche la liste de tous les employés
+     * 
+     * @return Employee[]|null
+     */
     public function findAllEmployees(): array|null {
         $query = $this->pdo->prepare(
             "SELECT * FROM employees"
@@ -99,16 +135,24 @@ class EmployeeModel {
         return $employees;
     }
 
-    public function addPassword(): bool {
-        $password = password_hash("Test", PASSWORD_BCRYPT);
+    /**
+     * Met à jour le mot de passe d'un employé
+     * 
+     * @param int $id
+     * @param string $password
+     * @return bool
+     */
+    public function addPassword(int $id, string $password): bool {
+        $passwordHashed = password_hash($password, PASSWORD_BCRYPT);
         var_dump($password);
         
         $query = $this->pdo->prepare(
-            "UPDATE employees SET passeword = :passeword  WHERE email = 'arthur.henry@email.fr'"
+            "UPDATE employees SET passeword = :passwordHashed  WHERE id = :id"
         );
 
         return $query->execute([
-            ':passeword' => $password
+            ':passwordHashed' => $passwordHashed,
+            'id' => $id
         ]);
     }
 

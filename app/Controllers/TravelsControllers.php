@@ -1,22 +1,50 @@
 <?php
+/**
+ * Devoir PHP MCV
+ * Site intranet pour la gestion de covoiturage des trajets entre agences
+ *
+ * @author Kevin Marlin
+ * @version 1.0
+ */
+
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Entity\Travel;
 use App\Models\TravelsModel;
 use App\Models\AgenciesModel;
 
+/**
+ * Contrôleur des trajets
+ */
 class TravelsControllers extends Controller {
+    /**
+     * @var TravelsModel $travelsModel
+     */
     private TravelsModel $travelsModel;
 
+    /**
+     * Initialise le contrôleur
+     */
     public function __construct() {
         $this->travelsModel = new TravelsModel();
     }
 
-    public function getTravelById(int $idTravel) {
+    /**
+     * Retourne un trajet en fonction de son identifiant
+     * 
+     * @return Travel|null
+     */
+    public function getTravelById(int $idTravel): Travel|null {
         return $this->travelsModel->findTravelById($idTravel);
     }
 
-    public function createIndex() {
+    /**
+     * Affiche la page de création d'un trajet
+     * 
+     * @return void
+     */
+    public function createIndex(): void {
         $agencies = (new AgenciesModel)->findAllAgencies();
         $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
         $this->render(
@@ -26,7 +54,13 @@ class TravelsControllers extends Controller {
         );
     }
 
-    public function updateIndex(int $id) {
+    /**
+     * Affiche la page de modification d'un trajet
+     * 
+     * @param int $id
+     * @return void
+     */
+    public function updateIndex(int $id): void {
         $agencies = (new AgenciesModel)->findAllAgencies();
         $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
         $travel = $this->getTravelById($id);
@@ -38,28 +72,53 @@ class TravelsControllers extends Controller {
         );
     }
 
-    public function updateTravel(int $id, mixed $data) {
+    /**
+     * Met à jour un trajet
+     * 
+     * @param int $id
+     * @param mixed $data
+     * @return void
+     */
+    public function updateTravel(int $id, mixed $data): void {
         $this->travelsModel->updateTravel($id, $data);
     }
 
+    /**
+     * Crée un trajet et recharge la page d'acceuil
+     * 
+     * @return void
+     */
     public function createNewTravel(): void {
-        $departure_at = $_POST['departure_date'] . " " . $_POST['departure_time'] . ":00";
-        $arrival_at = $_POST['arrival_date'] . " " . $_POST['arrival_time'] . ":00";
-        var_dump($_POST);
-        (new TravelsModel)->addTravel($departure_at, $arrival_at);
+        (new TravelsModel)->addTravel($_POST);
         header('Location: /');
   
     }
 
+    /**
+     * Retourne tous les trajets 
+     * 
+     * @return Travel[]|null
+     */
     public function getAllTravels(): array|null {
         return $this->travelsModel->findAllTravels();
 
     }
 
+    /**
+     * Retourne les trajets disponible
+     * 
+     * @return Travel[]|null
+     */
     public function getAvailableTravels(): array|null {
         return $this->travelsModel->findAllTravelsAvailable();
     }
 
+    /**
+     * Supprime un trajet en fonction de son identifiant
+     * 
+     * @param int $id
+     * @return void
+     */
     public function deleteTravel(int $id): void {
         $this->travelsModel->deleteOne($id);
     }
