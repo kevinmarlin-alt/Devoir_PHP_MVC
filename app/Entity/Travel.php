@@ -8,9 +8,9 @@ class Travel {
     public function __construct(
         private int $id,
         private string $departure_agency,
-        private string $departure_at,
+        private DateTime $departure_at,
         private string $arrival_agency,
-        private string $arrival_at,
+        private DateTime $arrival_at,
         private int $seats_available,
         private int $seats_total,
         private int $employee_id
@@ -30,32 +30,16 @@ class Travel {
         return $this->departure_agency;
     }
 
-    public function getDepartureDate(): string {
-        return new DateTime($this->departure_at)->format('d/m/Y');
-    }
-
-    public function getInputDepartureDate(): string {
-        return new DateTime($this->departure_at)->format('Y-m-d');
-    }
-
-    public function getDepartureTime(): string {
-        return new DateTime($this->departure_at)->format('H:i');
+    public function getDepartureAt(): DateTime {
+        return $this->departure_at;
     }
 
     public function getArrivalAgency(): string {
         return $this->arrival_agency;
     }
 
-    public function getArrivalDate(): string {
-        return new DateTime($this->arrival_at)->format('d/m/Y');    
-    }
-
-    public function getInputArrivalDate(): string {
-        return new DateTime($this->arrival_at)->format('Y-m-d');    
-    }
-
-    public function getArrivalTime(): string {
-        return new DateTime($this->arrival_at)->format('H:i');
+    public function getArrivalAt(): DateTime {
+        return $this->arrival_at;    
     }
 
     public function getSeatsAvailable(): int {

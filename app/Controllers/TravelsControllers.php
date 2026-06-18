@@ -2,11 +2,8 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Entity\Travel;
-use App\Models\EmployeeModel;
 use App\Models\TravelsModel;
 use App\Models\AgenciesModel;
-use DateTime;
 
 class TravelsControllers extends Controller {
     private TravelsModel $travelsModel;
@@ -16,7 +13,7 @@ class TravelsControllers extends Controller {
     }
 
     public function getTravelById(int $idTravel) {
-        return (new TravelsModel)->findTravelById($idTravel);
+        return $this->travelsModel->findTravelById($idTravel);
     }
 
     public function createIndex() {
@@ -32,17 +29,7 @@ class TravelsControllers extends Controller {
     public function updateIndex(int $id) {
         $agencies = (new AgenciesModel)->findAllAgencies();
         $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
-        $result = $this->getTravelById($id);
-        $travel = new Travel(
-            id: $result['id'],
-            departure_agency: $result['departure_agency'],
-            departure_at: $result['departure_at'],
-            arrival_agency: $result['arrival_agency'],
-            arrival_at: $result['arrival_at'],
-            seats_available: $result['seats_available'],
-            employee_id: $result['employee_id'],
-            seats_total: $result['seats_total']
-        );
+        $travel = $this->getTravelById($id);
  
         $this->render(
             'Mettre a jour un trajet',
@@ -64,29 +51,13 @@ class TravelsControllers extends Controller {
   
     }
 
-    public function getAvailableTravels(): array {
-    
-        $result = $this->travelsModel->findAllTravelsAvailable();
-        
-        if(!$result) {
-            return [];          
-        }
+    public function getAllTravels(): array|null {
+        return $this->travelsModel->findAllTravels();
 
-        $travels = [];
-        foreach($result as $travel) {
-            array_push($travels, new Travel(
-                id: $travel['id'],
-                departure_agency: $travel['departure_agency'],
-                departure_at: $travel['departure_at'],
-                arrival_agency: $travel['arrival_agency'],
-                arrival_at: $travel['arrival_at'],
-                seats_available: $travel['seats_available'],
-                seats_total: $travel['seats_total'],
-                employee_id: $travel['employee_id']
-            ));
-            
-        };
-        return $travels;
+    }
+
+    public function getAvailableTravels(): array|null {
+        return $this->travelsModel->findAllTravelsAvailable();
     }
 
     public function deleteTravel(int $id): void {

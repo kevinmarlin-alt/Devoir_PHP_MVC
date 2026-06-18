@@ -1,9 +1,9 @@
-const readBtnAll = document.querySelectorAll('.table__icon--read');
-const deleteBtnAll = document.querySelectorAll('.table__icon--delete');
+const readTravelBtnAll = document.querySelectorAll('.table__travel--read');
+const deleteTravelBtnAll = document.querySelectorAll('.table__travel--delete');
 const modal = document.querySelector('.modal');
 
-readBtnAll.forEach(btn => btn.addEventListener('click', showModalOnClick));
-deleteBtnAll.forEach(btn => btn.addEventListener('click', handleDelete));
+readTravelBtnAll.forEach(btn => btn.addEventListener('click', showModalOnClick));
+deleteTravelBtnAll.forEach(btn => btn.addEventListener('click', handleDelete));
 
 async function handleDelete(e) {
     e.preventDefault();

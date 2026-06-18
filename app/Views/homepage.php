@@ -19,11 +19,11 @@
         <?php foreach($travels as $travel): ?>
             <tr data-id-travel="<?= $travel->getId() ?>">
                 <td><?= $travel->getDepartureAgency() ?></td>
-                <td><?= $travel->getDepartureDate() ?></td>
-                <td><?= $travel->getDepartureTime() ?></td>
+                <td><?= $travel->getDepartureAt()->format('d/m/Y') ?></td>
+                <td><?= $travel->getDepartureAt()->format('H:i') ?></td>
                 <td><?= $travel->getArrivalAgency() ?></td>
-                <td><?= $travel->getArrivalDate() ?></td>
-                <td><?= $travel->getArrivalTime() ?></td>
+                <td><?= $travel->getArrivalAt()->format('d/m/Y') ?></td>
+                <td><?= $travel->getArrivalAt()->format('H:i') ?></td>
                 <td><?= $travel->getSeatsAvailable() ?></td>
                 <?php if(isset($_SESSION['user'])): ?>
                     <td>

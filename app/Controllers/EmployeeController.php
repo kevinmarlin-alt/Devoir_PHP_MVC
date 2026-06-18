@@ -12,15 +12,11 @@ class EmployeeController {
     }
 
     public function getEmployeeById(int $id) {
-        $employee = $this->employeeModel->findEmployeeById($id);
-        return new Employee(
-            id: $employee['id'],
-            lastname: $employee['lastname'],
-            firstname: $employee['firstname'],
-            phone: $employee['phone'],
-            email: $employee['email'],
-            password: $employee['passeword'],
-            role: $employee['role']
-        );
+        return $this->employeeModel->findEmployeeById($id);
+
+    }
+
+    public function getAllEmployees(): array {
+        return $this->employeeModel->findAllEmployees();
     }
 }
