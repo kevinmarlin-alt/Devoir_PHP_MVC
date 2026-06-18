@@ -7,6 +7,10 @@ use App\Models\EmployeeModel;
 class LoginController extends Controller {
 
     public function index() {
+        if(isset($_SESSION['user'])) {
+            header('Location: /');
+            exit;
+        }
         $this->render(
             'Connexion',
             'login'
@@ -31,6 +35,11 @@ class LoginController extends Controller {
             'role' => $employee->getRole()
         ];
     
+        header('Location: /');
+    }
+
+    public function logout(): void {
+        session_destroy();
         header('Location: /');
     }
 
