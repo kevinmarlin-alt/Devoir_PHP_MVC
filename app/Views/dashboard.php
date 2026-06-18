@@ -28,6 +28,22 @@
 
 <section id="agencies">
     <h2>Agences</h2>
+    <p>
+        <a class="" data-bs-toggle="collapse" href="#createAgencyCollapse" role="button" aria-expanded="false" aria-controls="createAgencyCollapse">
+            Créer une nouvelle agence
+        </a>
+    </p>
+    <div class="collapse" id="createAgencyCollapse">
+        <div class="card card-body mb-4 w-50">
+            <form action="/agencies/create" method="post">
+                <div class="mb-3">
+                    <label for="city" class="form-label">Nom de la ville de l'agence</label>
+                    <input type="text" class="form-control" name="city" id="city">
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+        </div>
+    </div>
     <?php if(isset($agencies)): ?>
         <table class="table table-bordered text-center">
             <tr class="table-primary">

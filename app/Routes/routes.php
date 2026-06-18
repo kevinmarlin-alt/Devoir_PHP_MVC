@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\AgenciesController;
 use App\Middlewares\AuthMiddleware;
 
 use App\Controllers\HomepageController;
@@ -62,6 +63,17 @@ $router->group('/employees', function ($router) {
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
         return json_encode((new EmployeeModel)->findEmployeeById($id));
+    });
+});
+
+// Routes of agencies
+$router->group('/agencies', function($router) {
+
+    $router->post('/create', function() {
+        AuthMiddleware::handle();
+        AdminMiddleware::handle();
+        (new AgenciesController)->createNewAgency($_POST);
+        header('Location: /dashboard/#agencies');
     });
 });
 

@@ -10,7 +10,7 @@ class AgenciesModel {
 
     public function __construct()
     {
-        $this->pdo = Database::getUsersConnection();
+        $this->pdo = Database::getAdminConnection();
     }
 
     public function findAllAgencies(): array|null {
@@ -33,5 +33,19 @@ class AgenciesModel {
             ));
         };
         return $employees;
+    }
+
+    public function createAgency(array $data): void {
+        $query = $this->pdo->prepare(
+            "INSERT INTO agencies (
+                city
+            ) VALUES (
+                :city
+            )"
+        );
+
+        $query->execute([
+            'city' => $data['city']
+        ]);
     }
 }
