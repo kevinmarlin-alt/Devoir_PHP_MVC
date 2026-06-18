@@ -96,4 +96,21 @@ class Employee {
     public function getRole(): string {
         return $this->role;
     }
+
+    /**
+     * Retourne un tableau des propriétées
+     * 
+     * @return array
+     */
+    public function toArray() {
+        return [
+            'id' => $this->id,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'password' => $this->password,
+            'role' => $this->role
+        ];
+    }
 }

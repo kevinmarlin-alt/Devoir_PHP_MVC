@@ -72,7 +72,8 @@ $router->group('/employees', function ($router) {
 
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
-        return json_encode((new EmployeeModel)->findEmployeeById($id));
+        header('Content-Type: application/json');
+        return json_encode((new EmployeeModel)->findEmployeeById($id)->toArray());
     });
 });
 
@@ -96,7 +97,8 @@ $router->group(('/travels'), function($router) {
 
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
-        return json_encode((new TravelsControllers)->getTravelById($id));
+        header('Content-Type: application/json');
+        return json_encode((new TravelsControllers)->getTravelById($id)->toArray());
     });
 
     $router->get('/create', function() {

@@ -113,4 +113,22 @@ class Travel {
         return $this->employee_id;
     }
 
+    /**
+     * Retourne un tableau des propriétées
+     * 
+     * @return array
+     */
+    public function toArray(): array {
+        return [
+            'id' => $this->id,
+            'departure_agency' => $this->departure_agency,
+            'departure_at' => $this->departure_at->format('Y-m-d H:i:s'),
+            'arrival_agency' => $this->arrival_agency,
+            'arrival_at' => $this->arrival_at->format('Y-m-d H:i:s'),
+            'seats_available' => $this->seats_available,
+            'seats_total' => $this->seats_total,
+            'employee_id' => $this->employee_id
+        ];
+    }
+
 }
