@@ -47,7 +47,6 @@ $router->group('/login', function($router){
     });
     
     $router->post('/', function() {
-        AuthMiddleware::handle();
         (new LoginController)->login();
     });
 });
