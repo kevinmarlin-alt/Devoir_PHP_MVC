@@ -7,6 +7,7 @@ use App\Controllers\HomepageController;
 use App\Controllers\LoginController;
 use App\Controllers\TravelsControllers;
 use App\Controllers\DashboardController;
+use App\Controllers\NotFoundController;
 use App\Middlewares\AdminMiddleware;
 use App\Models\EmployeeModel;
 
@@ -131,6 +132,10 @@ $router->group(('/travels'), function($router) {
  */
 $router->get('/accueil', function () {
     (new HomepageController)->index();
+});
+
+$router->notFound(function() {
+    (new NotFoundController)->index();
 });
 
 $router->run();
