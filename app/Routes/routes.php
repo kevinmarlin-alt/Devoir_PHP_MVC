@@ -41,6 +41,10 @@ $router->group('/login', function($router){
     });
 });
 
+$router->get('/logout', function() {
+    (new LoginController)->logout();
+});
+
 // Routes of employees
 $router->group('/employees', function ($router) {
 
