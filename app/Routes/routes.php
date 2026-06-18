@@ -5,7 +5,8 @@ use App\Middlewares\AuthMiddleware;
 use App\Controllers\HomepageController;
 use App\Controllers\LoginController;
 use App\Controllers\TravelsControllers;
-
+use App\Controllers\DashboardController;
+use App\Middlewares\AdminMiddleware;
 use App\Models\EmployeeModel;
 
 use Buki\Router\Router;
@@ -25,6 +26,15 @@ $router->get('/', function () {
     header('Location: '.$uri.'/accueil');
 });
 
+// Routes of dashboard
+$router->group('/dashboard', function($router) {
+
+    $router->get('/', function () {
+        AdminMiddleware::handle();
+        (new DashboardController)->index();
+    });
+});
+
 // Routes of login
 $router->group('/login', function($router){
     
@@ -37,11 +47,13 @@ $router->group('/login', function($router){
     });
     
     $router->post('/', function() {
+        AuthMiddleware::handle();
         (new LoginController)->login();
     });
 });
 
 $router->get('/logout', function() {
+    AuthMiddleware::handle();
     (new LoginController)->logout();
 });
 
@@ -49,6 +61,7 @@ $router->get('/logout', function() {
 $router->group('/employees', function ($router) {
 
     $router->get('/:id', function(int $id, Response $response) {
+        AuthMiddleware::handle();
         return json_encode((new EmployeeModel)->findEmployeeById($id));
     });
 });

@@ -3,7 +3,6 @@ namespace App\Models;
 
 use App\Core\Database;
 use App\Entity\Travel;
-use DateInterval;
 use DateTime;
 use PDO;
 
@@ -38,10 +37,21 @@ class TravelsModel {
 
         $query->execute(['id' => $id]);
 
-        return $query->fetch();
+        $result = $query->fetch();
+
+        return new Travel(
+            id: $result['id'],
+            departure_agency: $result['departure_agency'],
+            departure_at: new DateTime($result['departure_at']),
+            arrival_agency: $result['arrival_agency'],
+            arrival_at: new DateTime($result['arrival_at']),
+            seats_available: $result['seats_available'],
+            employee_id: $result['employee_id'],
+            seats_total: $result['seats_total']
+        );
     }
 
-    public function findAllTravelsAvailable() {
+    public function findAllTravelsAvailable(): array|null {
         
         $query = $this->pdo->prepare(
             "SELECT 
@@ -73,7 +83,27 @@ class TravelsModel {
 
         $query->execute();
 
-        return $query->fetchAll();
+        $result = $query->fetchAll();
+
+        if(!$result) {
+            return null;
+        }
+
+        $travels = [];
+        foreach($result as $travel) {
+            array_push($travels, new Travel(
+                id: $travel['id'],
+                departure_agency: $travel['departure_agency'],
+                departure_at: new DateTime($travel['departure_at']),
+                arrival_agency: $travel['arrival_agency'],
+                arrival_at: new DateTime($travel['arrival_at']),
+                seats_available: $travel['seats_available'],
+                employee_id: $travel['employee_id'],
+                seats_total: $travel['seats_total']
+            ));
+        }
+
+        return $travels;
     }
 
     public function addTravel(string $departure_at, string $arrival_at) {
@@ -140,5 +170,54 @@ class TravelsModel {
         );
 
         $query->execute(['id' => $id]);
+    }
+
+    public function findAllTravels(): array|null {
+        $query = $this->pdo->prepare(
+            "SELECT 
+                t.id,
+                dep.city AS departure_agency,
+                t.departure_at,
+                arr.city AS arrival_agency,
+                t.arrival_at,
+                t.seats_available,
+                t.seats_total,
+                t.employee_id
+            FROM travels t
+
+            INNER JOIN agencies dep
+                ON dep.id = t.departure_agency_id
+
+            INNER JOIN agencies arr
+                ON arr.id = t.arrival_agency_id
+
+            ORDER BY 
+                t.departure_at 
+                ASC"
+        );
+
+        $query->execute();
+
+        $result = $query->fetchAll();
+
+        if(!$result) {
+            return null;
+        }
+
+        $travels = [];
+        foreach($result as $travel) {
+            array_push($travels, new Travel(
+                id: $travel['id'],
+                departure_agency: $travel['departure_agency'],
+                departure_at: new DateTime($travel['departure_at']),
+                arrival_agency: $travel['arrival_agency'],
+                arrival_at: new DateTime($travel['arrival_at']),
+                seats_available: $travel['seats_available'],
+                employee_id: $travel['employee_id'],
+                seats_total: $travel['seats_total']
+            ));
+        }
+
+        return $travels;
     }
 }

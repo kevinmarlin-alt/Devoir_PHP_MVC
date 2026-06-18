@@ -52,11 +52,54 @@ class EmployeeModel {
             ":id" => $id
         ]);
 
-        return $query->fetch();
+        $result = $query->fetch();
+
+        if(!$result) {
+            return null;
+        }
+
+        return new Employee(
+            id: $result['id'],
+            lastname: $result['lastname'],
+            firstname: $result['firstname'],
+            phone: $result['phone'],
+            email: $result['email'],
+            password: $result['passeword'],
+            role: $result['role']
+        );
 
     }
 
-    public function addPassword() {
+    public function findAllEmployees(): array|null {
+        $query = $this->pdo->prepare(
+            "SELECT * FROM employees"
+        );
+
+        $query->execute();
+
+        $result = $query->fetchAll();
+
+        if(!$result) {
+            return null;
+        }
+
+        $employees = [];
+        foreach($result as $employee) {
+            array_push($employees, new Employee(
+                id: $employee['id'],
+                lastname: $employee['lastname'],
+                firstname: $employee['firstname'],
+                phone: $employee['phone'],
+                email: $employee['email'],
+                password: $employee['passeword'] ?? "",
+                role: $employee['role']
+            ));
+        }
+
+        return $employees;
+    }
+
+    public function addPassword(): bool {
         $password = password_hash("Test", PASSWORD_BCRYPT);
         var_dump($password);
         
@@ -64,7 +107,7 @@ class EmployeeModel {
             "UPDATE employees SET passeword = :passeword  WHERE email = 'arthur.henry@email.fr'"
         );
 
-        $query->execute([
+        return $query->execute([
             ':passeword' => $password
         ]);
     }
