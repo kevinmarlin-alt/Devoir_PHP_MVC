@@ -24,11 +24,11 @@
             <div class="d-flex gap-2 mb-3">
                 <div class="w-50">
                     <label class="form-label" for="departure_date">Date</label><br>
-                    <input class="form-control" type="date" name="departure_date" id="departure_date" value="<?= $travel->getInputDepartureDate() ?>">
+                    <input class="form-control" type="date" name="departure_date" id="departure_date" value="<?= $travel->getDepartureAt()->format('Y-m-d') ?>">
                 </div>
                 <div class="w-50">
                     <label class="form-label" for="departure_time">Heure</label><br>
-                    <input class="form-control" type="time" name="departure_time" id="departure_time" value="<?= $travel->getDepartureTime() ?>">
+                    <input class="form-control" type="time" name="departure_time" id="departure_time" value="<?= $travel->getDepartureAt()->format('H:i') ?>">
                 </div>
             </div>
             <div class="mb-3">
@@ -46,11 +46,11 @@
             <div class="d-flex gap-2 mb-3">
                 <div class="w-50">
                     <label class="form-label" for="arrival_date">Date</label><br>
-                    <input class="form-control" type="date" name="arrival_date" id="arrival_date" value="<?= $travel->getInputArrivalDate() ?>">
+                    <input class="form-control" type="date" name="arrival_date" id="arrival_date" value="<?= $travel->getArrivalAt()->format('Y-m-d') ?>">
                 </div>
                 <div class="w-50">
                     <label class="form-label" for="arrival_time">Heure</label><br>
-                    <input class="form-control" type="time" name="arrival_time" id="arrival_time" value="<?= $travel->getArrivalTime() ?>">
+                    <input class="form-control" type="time" name="arrival_time" id="arrival_time" value="<?= $travel->getArrivalAt()->format('H:i') ?>">
                 </div>
             </div>
             <div class="mb-3">
