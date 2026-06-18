@@ -8,17 +8,25 @@ use PDO;
 class Database {
     private static PDO $pdo;
 
-    public static function getAdminConnection(): PDO {
+    public static function getConnection(): PDO {
         $usersDB = require __DIR__ . "/../env.php";
-        $admin = $usersDB['admin'];
+
+        $profil = $usersDB['USERS'];
+        
+        if(isset($_SESSION['user'])){
+            if($_SESSION['user']['role'] === 'ADMIN') {
+                $profil = $usersDB['ADMIN'];
+            }
+        }
+
         self::$pdo = new PDO(
             sprintf(
                 'mysql:host=%s;dbname=%s;charset=utf8mb4',
-                $admin['host'],
-                $admin['dbname']
+                $profil['host'],
+                $profil['dbname']
             ),
-                $admin['user'],
-                $admin['password'],
+                $profil['user'],
+                $profil['password'],
                 [
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                 ]
