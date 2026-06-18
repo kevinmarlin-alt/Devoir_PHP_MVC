@@ -10,7 +10,7 @@ class EmployeeModel {
 
     public function __construct(
     ) {
-        $this->pdo = Database::getAdminConnection();
+        $this->pdo = Database::getConnection();
     }
 
     public function findEmployeeByEmail(string $email) {

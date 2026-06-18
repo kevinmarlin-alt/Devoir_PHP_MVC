@@ -10,7 +10,7 @@ class AgenciesModel {
 
     public function __construct()
     {
-        $this->pdo = Database::getAdminConnection();
+        $this->pdo = Database::getConnection();
     }
 
     public function findAllAgencies(): array|null {

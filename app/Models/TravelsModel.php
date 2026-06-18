@@ -10,7 +10,7 @@ class TravelsModel {
     private PDO $pdo;
 
     public function __construct() {
-        $this->pdo = Database::getUsersConnection();
+        $this->pdo = Database::getConnection();
     }
 
     public function findTravelById(int $id) {
