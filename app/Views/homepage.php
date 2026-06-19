@@ -6,7 +6,7 @@
         <p>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</p>
     <?php endif; ?>
     
-    <table class="table table-bordered text-center table-striped caption-top">
+    <table class="table table-bordered text-center table-striped">
         <tr class="table-primary">
             <th>Départ</th>
             <th>Date</th>

@@ -60,8 +60,8 @@ CREATE TABLE travels (
 
     employee_id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(departure_agency_id) REFERENCES agencies(id),
-    FOREIGN KEY(arrival_agency_id) REFERENCES agencies(id),
+    FOREIGN KEY(departure_agency_id) REFERENCES agencies(id) ON DELETE CASCADE,
+    FOREIGN KEY(arrival_agency_id) REFERENCES agencies(id) ON DELETE CASCADE,
     FOREIGN KEY(employee_id) REFERENCES employees(id),
 
     CONSTRAINT chk_seats_Max CHECK ((seats_total > 0)),
