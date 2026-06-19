@@ -1,4 +1,4 @@
-<script src="/assets/javascript/homepage.js" type="text/javascript" defer></script>
+<script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
 <h2>Trajets disponible</h2>
 <?php if(isset($travels) && $travels): ?>
 

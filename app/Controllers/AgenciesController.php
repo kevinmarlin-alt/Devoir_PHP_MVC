@@ -59,4 +59,13 @@ class AgenciesController {
         $this->agenciesModel->createAgency($data['city']);
     }
 
+    /**
+     * Supprime une agence
+     * 
+     * @param int $id
+     * @return bool
+     */
+    public function deleteAgency(int $id): bool {
+        return $this->agenciesModel->deleteOne($id);
+    }
 }

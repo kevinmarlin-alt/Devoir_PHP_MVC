@@ -37,6 +37,7 @@ $router->get('/', function () {
 $router->group('/dashboard', function($router) {
 
     $router->get('/', function () {
+        AuthMiddleware::handle();
         AdminMiddleware::handle();
         (new DashboardController)->index();
     });
@@ -87,6 +88,12 @@ $router->group('/agencies', function($router) {
         AdminMiddleware::handle();
         (new AgenciesController)->createNewAgency($_POST);
         header('Location: /dashboard/#agencies');
+    });
+
+    $router->delete('/:id', function(int $id) {
+        AuthMiddleware::handle();
+        AdminMiddleware::handle();
+        (new DashboardController)->deleteAgency($id);       
     });
 });
 

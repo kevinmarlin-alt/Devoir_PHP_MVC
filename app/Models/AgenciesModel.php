@@ -79,4 +79,20 @@ class AgenciesModel {
             'city' => $city
         ]);
     }
+
+    /**
+     * Supprime une agence
+     * 
+     * @param int $id
+     * @return bool
+     */
+    public function deleteOne(int $id): bool {
+        $query = $this->pdo->prepare(
+            "DELETE FROM agencies WHERE id = :id"
+        );
+
+        return $query->execute([
+            'id' => $id
+        ]);
+    }
 }
