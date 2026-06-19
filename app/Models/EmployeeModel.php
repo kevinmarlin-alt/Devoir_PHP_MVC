@@ -144,10 +144,15 @@ class EmployeeModel {
      */
     public function addPassword(int $id, string $password): bool {
         $passwordHashed = password_hash($password, PASSWORD_BCRYPT);
-        var_dump($password);
+        var_dump($passwordHashed);
         
         $query = $this->pdo->prepare(
-            "UPDATE employees SET passeword = :passwordHashed  WHERE id = :id"
+            "UPDATE 
+                employees 
+            SET 
+                passeword = :passwordHashed  
+            WHERE 
+                id = :id"
         );
 
         return $query->execute([

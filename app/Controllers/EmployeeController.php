@@ -49,4 +49,8 @@ class EmployeeController {
     public function getAllEmployees(): array|null {
         return $this->employeeModel->findAllEmployees();
     }
+
+    public function updatePassword(int $id, array $data): bool {
+        return $this->employeeModel->addPassword($id, $data['pwd']);
+    }
 }
