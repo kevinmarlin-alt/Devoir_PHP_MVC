@@ -144,6 +144,7 @@ $router->group(('/travels'), function($router) {
 
     $router->delete('/delete/:id', function(int $id) {
         AuthMiddleware::handle();
+        
         (new TravelsControllers)->deleteTravel($id);
     });
 });
