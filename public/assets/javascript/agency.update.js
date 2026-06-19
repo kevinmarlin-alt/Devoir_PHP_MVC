@@ -7,7 +7,7 @@ async function handleSubmit(e) {
 
     const data = Object.fromEntries(new FormData(e.target));
     
-    idAgency = data.id
+    const idAgency = data.id
     const response = await fetch(`/agencies/update/${idAgency}`, {
         method: 'PUT',
         headers: {

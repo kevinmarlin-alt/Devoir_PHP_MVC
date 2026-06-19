@@ -7,6 +7,7 @@ use App\Controllers\HomepageController;
 use App\Controllers\LoginController;
 use App\Controllers\TravelsControllers;
 use App\Controllers\DashboardController;
+use App\Controllers\EmployeeController;
 use App\Controllers\NotFoundController;
 use App\Middlewares\AdminMiddleware;
 use App\Models\EmployeeModel;
@@ -76,6 +77,14 @@ $router->group('/employees', function ($router) {
         header('Content-Type: application/json');
         return json_encode((new EmployeeModel)->findEmployeeById($id)->toArray());
     });
+
+    $router->put('/update/:id', function(int $id, Request $request) {
+        AuthMiddleware::handle();
+        AdminMiddleware::handle();
+        $data = json_decode($request->getContent(), true);
+        (new EmployeeController)->updatePassword($id, $data);
+        
+    });
 });
 
 /**
@@ -144,7 +153,7 @@ $router->group(('/travels'), function($router) {
 
     $router->delete('/delete/:id', function(int $id) {
         AuthMiddleware::handle();
-        
+
         (new TravelsControllers)->deleteTravel($id);
     });
 });

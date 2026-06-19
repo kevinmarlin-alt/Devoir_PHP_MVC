@@ -1,5 +1,6 @@
 <script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
 <script src="/assets/javascript/agencies.table.js" type="text/javascript" defer></script>
+<script src="/assets/javascript/employee.update.js" type="text/javascript" defer></script>
 
 <nav class="mb-4">
     <a href="/">Acceuil</a>
@@ -64,6 +65,33 @@
     <section class="col card p-4" id="users">
         <h2>Utilisateurs</h2>
         <?php if(isset($employees)): ?>
+            <p>
+                <a class="employees__updatePwdCollapse--Btn" data-bs-toggle="collapse" href="#employeesPasswordCollapse" role="button" aria-expanded="false" aria-controls="employeesPasswordCollapse">
+                    Ajouter ou modifier un mot de passe
+                </a>
+            </p>
+            <div class="collapse w-50" id="employeesPasswordCollapse">
+                <div class="card card-body mb-4">
+                    <form action="#" method="">
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Adresse email</label><br>
+                                <select class="form-control" name="email" id="email" required >
+                                    <?php foreach($employees as $employee): ?>
+                                        <option value="<?= $employee->getId() ?>"><?= $employee->getEmail() ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pwd" class="form-label">Nouveau mot de passe</label>
+                                <input type="text" class="form-control" name="pwd" id="pwd">
+                            </div>
+                        </div>
+                        <input type="hidden" name="idEmployee" value="<?= $employee->getiD() ?>">
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </form>
+                </div>
+            </div>
             <table class="table table-bordered text-center table-sm  table-striped">
                 <tr class="table-primary">
                     <th>ID</th>
