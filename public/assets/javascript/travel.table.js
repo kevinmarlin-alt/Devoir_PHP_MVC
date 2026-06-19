@@ -40,7 +40,7 @@ async function showModalOnClick(e) {
 
     modal.querySelector('#modal_owner').innerHTML = `${employee.firstname} ${employee.lastname}`;
     modal.querySelector('#modal_phone').innerHTML = employee.phone;
-    modal.querySelector('#modal_phone').href = `tel:+${employee.email}`;
+    modal.querySelector('#modal_phone').href = `tel:+${employee.phone}`;
     modal.querySelector('#modal_email').innerHTML = employee.email;
     modal.querySelector('#modal_email').href = `mailto:${employee.email}`;
     modal.querySelector('#modal_total_seats').innerHTML = travel.seats_total;

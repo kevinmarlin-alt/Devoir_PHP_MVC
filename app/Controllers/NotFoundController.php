@@ -12,26 +12,24 @@ namespace App\Controllers;
 use App\Core\Controller;
 
 /**
- * Contrôleur de la page d'accueil
+ * Contrôleur des pages non trouvées
  */
-class HomepageController extends Controller {
-
+class NotFoundController extends Controller {
+    
     /**
-     * Affiche la page d'accueil
+     * Affiche la page 404
      * 
      * @return void
      */
     public function index(): void {
-        $travels = (new TravelsControllers)->getAvailableTravels();
         $employee = null;
         if(isset($_SESSION['user'])) {
             $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
         }
         $this->render(
-            title:'Accueil',
-            view: 'homepage',
-            vars: compact('travels', 'employee')
+            'erreur 404',
+            '404',
+            compact('employee')
         );
     }
-
 }

@@ -7,6 +7,7 @@ use App\Controllers\HomepageController;
 use App\Controllers\LoginController;
 use App\Controllers\TravelsControllers;
 use App\Controllers\DashboardController;
+use App\Controllers\NotFoundController;
 use App\Middlewares\AdminMiddleware;
 use App\Models\EmployeeModel;
 
@@ -16,6 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 $router = new Router();
 
+/**
+ * Route d'entrée du site internet et redirection vers l'acceuil
+ */
 $router->get('/', function () {
     if(!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
         $uri = 'https://';
@@ -27,16 +31,21 @@ $router->get('/', function () {
     header('Location: '.$uri.'/accueil');
 });
 
-// Routes of dashboard
+/**
+ * Routes de gestion du tableau de bord
+ */
 $router->group('/dashboard', function($router) {
 
     $router->get('/', function () {
+        AuthMiddleware::handle();
         AdminMiddleware::handle();
         (new DashboardController)->index();
     });
 });
 
-// Routes of login
+/**
+ * Routes de gestion de connexion
+ */
 $router->group('/login', function($router){
     
     $router->get('/', function() {
@@ -57,16 +66,21 @@ $router->get('/logout', function() {
     (new LoginController)->logout();
 });
 
-// Routes of employees
+/**
+ * Routes de gestion des employés
+ */
 $router->group('/employees', function ($router) {
 
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
-        return json_encode((new EmployeeModel)->findEmployeeById($id));
+        header('Content-Type: application/json');
+        return json_encode((new EmployeeModel)->findEmployeeById($id)->toArray());
     });
 });
 
-// Routes of agencies
+/**
+ * Routes de gestion des agences
+ */
 $router->group('/agencies', function($router) {
 
     $router->post('/create', function() {
@@ -75,14 +89,23 @@ $router->group('/agencies', function($router) {
         (new AgenciesController)->createNewAgency($_POST);
         header('Location: /dashboard/#agencies');
     });
+
+    $router->delete('/:id', function(int $id) {
+        AuthMiddleware::handle();
+        AdminMiddleware::handle();
+        (new DashboardController)->deleteAgency($id);       
+    });
 });
 
-// Routes of travels
+/**
+ * Routes de gestion des trajets
+ */
 $router->group(('/travels'), function($router) {
 
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
-        return json_encode((new TravelsControllers)->getTravelById($id));
+        header('Content-Type: application/json');
+        return json_encode((new TravelsControllers)->getTravelById($id)->toArray());
     });
 
     $router->get('/create', function() {
@@ -113,8 +136,15 @@ $router->group(('/travels'), function($router) {
     });
 });
 
+/**
+ * Routes publiques
+ */
 $router->get('/accueil', function () {
     (new HomepageController)->index();
+});
+
+$router->notFound(function() {
+    (new NotFoundController)->index();
 });
 
 $router->run();
