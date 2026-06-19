@@ -12,7 +12,7 @@
     <div class="container-lg">
         <?php require __DIR__ . "/header.php" ?>
         
-        <main class="container-lg">
+        <main class="container-lg my-4">
             <?php require __DIR__ . "/../" . $view . ".php" ?>
         </main>
             

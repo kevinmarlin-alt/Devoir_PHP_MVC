@@ -61,6 +61,32 @@ class AgenciesModel {
     }
 
     /**
+     * Recherche une agences
+     * 
+     * @param int $id
+     * @return Agency|null
+     */
+    public function findOne(int $id): Agency|null {
+        $query = $this->pdo->prepare(
+            "SELECT * FROM agencies WHERE id = :id"
+        );
+        $query->execute([
+            'id' => $id
+        ]);
+
+        $result = $query->fetch();
+ 
+        if(!$result) {
+            return null;
+        }
+
+        return new Agency(
+                id: $result['id'],
+                city: $result['city']
+            );
+    }
+
+    /**
      * Crée une agence
      * 
      * @param string $city
@@ -78,6 +104,28 @@ class AgenciesModel {
         return $query->execute([
             'city' => $city
         ]);
+    }
+
+    /**
+     * Met à jour le nom d'une agence
+     * 
+     * @param mixed $data
+     * @return bool
+     */
+    public function updateAgency(int $id, mixed $data): bool {
+        $query = $this->pdo->prepare(
+            "UPDATE 
+                agencies 
+            SET 
+                city = :city
+            WHERE 
+                id = :id"
+        );
+
+        return $query->execute([
+            'id' => $id,
+            'city' => $data['city']
+        ]); 
     }
 
     /**

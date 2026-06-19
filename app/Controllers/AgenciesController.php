@@ -40,6 +40,15 @@ class AgenciesController {
     } 
 
     /**
+     * Retourne une agences en fonction de son idendifiant
+     * 
+     * @return Agency|null
+     */
+    public function getAgencyById(int $id): Agency|null {
+        return $this->agenciesModel->findOne($id);
+    } 
+
+    /**
      * Crée une nouvelle agence 
      * 
      * En fonction du nom de la ville uniquement
@@ -48,15 +57,26 @@ class AgenciesController {
      * @return void
      */
     public function createNewAgency(array $data): void {
-        $agencies = $this->agenciesModel->findAllAgencies();
-        
-        foreach($agencies as $agency) {
-            if($agency->getCity() === $data['city']) {
-                header('Location: /dashboard/#agencies');
-                exit;
-            }
+        if(!$this->isUnique($data['city'])) {
+            header('Location: /dashboard/#agencies');
+            exit;
         }
         $this->agenciesModel->createAgency($data['city']);
+    }
+
+    /**
+     * Met à jour le nom d'une agence
+     * 
+     * @param int $id
+     * @param mixed $data
+     * @return void
+     */
+    public function updateAgency(int $id, mixed $data): void {
+        if(!$this->isUnique($data['city'])) {
+            header('Location: /dashboard/#agencies');
+            exit;
+        }
+        $this->agenciesModel->updateAgency($id, $data);
     }
 
     /**
@@ -67,5 +87,21 @@ class AgenciesController {
      */
     public function deleteAgency(int $id): bool {
         return $this->agenciesModel->deleteOne($id);
+    }
+
+    /**
+     * Vérifie si le nom de la ville est unique
+     * 
+     * @param string $city
+     * @return bool
+     */
+    private function isUnique(string $city): bool {
+        $agencies = $this->agenciesModel->findAllAgencies();
+        foreach($agencies as $agency) {
+            if($agency->getCity() === $city) {
+                return false;
+            }
+        }
+        return true;
     }
 }

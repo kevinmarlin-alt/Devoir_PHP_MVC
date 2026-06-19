@@ -2,7 +2,10 @@
 <h2>Trajets disponible</h2>
 <?php if(isset($travels) && $travels): ?>
 
-    <p>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</p>
+    <?php if(!isset($_SESSION['user'])): ?>
+        <p>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</p>
+    <?php endif; ?>
+    
     <table class="table table-bordered text-center table-striped caption-top">
         <tr class="table-primary">
             <th>Départ</th>
