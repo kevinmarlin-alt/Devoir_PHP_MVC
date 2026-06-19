@@ -95,6 +95,18 @@ $router->group('/agencies', function($router) {
         AdminMiddleware::handle();
         (new DashboardController)->deleteAgency($id);       
     });
+
+    $router->get('/update/', function () {
+        AuthMiddleware::handle();
+        (new DashboardController)->updateAgencyIndex($_GET['id']);
+    });
+
+    $router->put('/update/:id', function (int $id, Request $request) {
+        AuthMiddleware::handle();
+        $data = json_decode($request->getContent(), true);
+        (new AgenciesController)->updateAgency($id, $data);
+        
+    });
 });
 
 /**

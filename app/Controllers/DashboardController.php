@@ -12,10 +12,6 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Controllers\EmployeeController;
 use App\Controllers\AgenciesController;
-use Exception;
-use Throwable;
-
-use function PHPUnit\Framework\throwException;
 
 /**
  * Contrôleur du tableau de bord
@@ -42,6 +38,23 @@ class DashboardController extends Controller {
             'Tableau de bord', 
             'dashboard', 
             compact('employees', 'agencies', 'travels', 'employee')
+        );
+    }
+
+    /**
+     * Affiche la page de modification d'une agence
+     * 
+     * @param int $id
+     * @return void
+     */
+    public function updateAgencyIndex(int $id): void {
+        $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
+        $agency = $this->agenciesController->getAgencyById($id);
+ 
+        $this->render(
+            'Mettre a jour un trajet',
+            'Agencies/update',
+            compact('employee', 'agency')
         );
     }
 
