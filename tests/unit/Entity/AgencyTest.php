@@ -1,13 +1,12 @@
 <?php
-namespace Tests\Entity;
+namespace Tests\unit\Entity;
 
 use PHPUnit\Framework\TestCase;
 use App\Entity\Agency;
 
 class AgencyTest extends TestCase {
     
-    public function testAgencyProperties()
-    {
+    public function testAgencyProperties() {
         $agency = new Agency(1, 'Paris');
 
         $this->assertEquals(1, $agency->getId());
