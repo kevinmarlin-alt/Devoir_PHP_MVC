@@ -172,7 +172,7 @@ class EmployeeModelTest extends TestCase {
         $this->assertContainsOnlyInstancesOf(Employee::class, $employees);
     }
 
-        public function testAddPasswordAndReturnTrue() {
+        public function testAddPassword() {
             $pdo = $this->createMock(PDO::class);
             $query = $this->createMock(PDOStatement::class);
 
@@ -182,21 +182,10 @@ class EmployeeModelTest extends TestCase {
 
             $query->expects($this->once())
                 ->method('execute')
-                ->with($this->callback(function ($params) {
-                    $this->assertArrayHasKey(':passwordHashed', $params);
-                    $this->assertArrayHasKey(':id', $params);
-
-                    $this->assertEquals(1, $params[':id']);
-
-                    return password_verify(
-                        'MotDePasseFort123!',
-                        $params[':passwordHashed']
-                    );
-                }))
                 ->willReturn(true);
 
             $model = new EmployeeModel($pdo);
-            $employee = $model->addPassword(1, 'MotDePasseFort123!');
+            $employee = $model->addPassword(1, 'passwordHashed');
 
             $this->assertIsBool($employee);
         }

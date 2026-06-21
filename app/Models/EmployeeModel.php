@@ -142,10 +142,8 @@ class EmployeeModel {
      * @param string $password
      * @return bool
      */
-    public function addPassword(int $id, string $password): bool {
-        $passwordHashed = password_hash($password, PASSWORD_BCRYPT);
-        var_dump($passwordHashed);
-        
+    public function addPassword(int $id, string $passwordHashed): bool {
+       
         $query = $this->pdo->prepare(
             "UPDATE 
                 employees 
