@@ -28,8 +28,8 @@ class EmployeeModel {
     /**
      * Initialise le modèle
      */
-    public function __construct() {
-        $this->pdo = Database::getConnection();
+    public function __construct(?PDO $pdo = null) {
+        $this->pdo = $pdo ?? Database::getConnection();
     }
 
     /**
@@ -157,7 +157,7 @@ class EmployeeModel {
 
         return $query->execute([
             ':passwordHashed' => $passwordHashed,
-            'id' => $id
+            ':id' => $id
         ]);
     }
 
