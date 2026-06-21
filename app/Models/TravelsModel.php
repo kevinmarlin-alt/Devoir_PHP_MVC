@@ -72,9 +72,9 @@ class TravelsModel {
         return new Travel(
             id: $result['id'],
             departure_agency: $result['departure_agency'],
-            departure_at: new DateTime($result['departure_at']),
+            departure_at: $result['departure_at'],
             arrival_agency: $result['arrival_agency'],
-            arrival_at: new DateTime($result['arrival_at']),
+            arrival_at: $result['arrival_at'],
             seats_available: $result['seats_available'],
             employee_id: $result['employee_id'],
             seats_total: $result['seats_total']
@@ -131,9 +131,9 @@ class TravelsModel {
             array_push($travels, new Travel(
                 id: $travel['id'],
                 departure_agency: $travel['departure_agency'],
-                departure_at: new DateTime($travel['departure_at']),
+                departure_at: $travel['departure_at'],
                 arrival_agency: $travel['arrival_agency'],
-                arrival_at: new DateTime($travel['arrival_at']),
+                arrival_at: $travel['arrival_at'],
                 seats_available: $travel['seats_available'],
                 employee_id: $travel['employee_id'],
                 seats_total: $travel['seats_total']
@@ -270,9 +270,9 @@ class TravelsModel {
             array_push($travels, new Travel(
                 id: $travel['id'],
                 departure_agency: $travel['departure_agency'],
-                departure_at: new DateTime($travel['departure_at']),
+                departure_at: $travel['departure_at'],
                 arrival_agency: $travel['arrival_agency'],
-                arrival_at: new DateTime($travel['arrival_at']),
+                arrival_at: $travel['arrival_at'],
                 seats_available: $travel['seats_available'],
                 employee_id: $travel['employee_id'],
                 seats_total: $travel['seats_total']

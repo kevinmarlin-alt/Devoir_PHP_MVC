@@ -11,9 +11,9 @@ class Travel {
     /**
      * @param int $id
      * @param string $departure_agency
-     * @param DateTime $departure_at
+     * @param string $departure_at
      * @param string $arrival_agency
-     * @param DateTime $arrival_at
+     * @param string $arrival_at
      * @param int $seats_available
      * @param int $seats_total
      * @param int $employee_id
@@ -21,9 +21,9 @@ class Travel {
     public function __construct(
         private int $id,
         private string $departure_agency,
-        private DateTime $departure_at,
+        private string $departure_at,
         private string $arrival_agency,
-        private DateTime $arrival_at,
+        private string $arrival_at,
         private int $seats_available,
         private int $seats_total,
         private int $employee_id
@@ -65,7 +65,7 @@ class Travel {
      * @return DateTime
      */
     public function getDepartureAt(): DateTime {
-        return $this->departure_at;
+        return new DateTime($this->departure_at);
     }
 
     /**
@@ -83,7 +83,7 @@ class Travel {
      * @return DateTime
      */
     public function getArrivalAt(): DateTime {
-        return $this->arrival_at;    
+        return new DateTime($this->arrival_at);    
     }
 
     /**
