@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace Tests\unit;
+namespace Tests\unit\Entity;
 
 use App\Entity\Agency;
 use App\Models\AgenciesModel;
