@@ -28,9 +28,11 @@ class TravelsModel {
 
     /**
      * Initialise le modèle
+     * 
+     * @param ?PDO $pdo
      */
-    public function __construct() {
-        $this->pdo = Database::getConnection();
+    public function __construct(?PDO $pdo = null) {
+        $this->pdo = $pdo ?? Database::getConnection();
     }
 
     /**
@@ -146,10 +148,10 @@ class TravelsModel {
     /**
      * Crée un trajet 
      * 
-     * @param mixed $data
+     * @param array $data
      * @return bool
      */
-    public function addTravel(mixed $data): bool {
+    public function addTravel(array $data): bool {
         $query = $this->pdo->prepare(
             "INSERT INTO travels (
                 departure_agency_id,
