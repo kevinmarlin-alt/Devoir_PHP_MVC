@@ -12,6 +12,7 @@ namespace App\Models;
 use App\Core\Database;
 use App\Entity\Agency;
 use PDO;
+use PDOStatement;
 
 /**
  * Modèle de gestion des agences
@@ -28,9 +29,9 @@ class AgenciesModel {
     /**
      * Initialise le modèle
      */
-    public function __construct()
+    public function __construct(?PDO $pdo = null)
     {
-        $this->pdo = Database::getConnection();
+        $this->pdo =  $pdo ?? Database::getConnection();
     }
 
     /**
@@ -39,11 +40,17 @@ class AgenciesModel {
      * @return Agency[]|null
      */
     public function findAllAgencies(): array|null {
+        /**
+         * @var PDOStatement|false $query
+         */
         $query = $this->pdo->prepare(
             "SELECT * FROM agencies ORDER BY city ASC"
         );
         $query->execute();
 
+        /**
+         * @var array $result
+         */
         $result = $query->fetchAll();
 
         if(!$result) {
