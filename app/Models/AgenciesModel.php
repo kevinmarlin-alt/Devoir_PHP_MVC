@@ -46,10 +46,14 @@ class AgenciesModel {
         $query = $this->pdo->prepare(
             "SELECT * FROM agencies ORDER BY city ASC"
         );
+
+        if ($query === false) {
+            return [];
+        }
         $query->execute();
 
         /**
-         * @var array $result
+         * @var array<int,array<string,mixed>> $result
          */
         $result = $query->fetchAll();
 

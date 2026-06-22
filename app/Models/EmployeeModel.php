@@ -139,7 +139,7 @@ class EmployeeModel {
      * Met à jour le mot de passe d'un employé
      * 
      * @param int $id
-     * @param string $password
+     * @param string $passwordHashed
      * @return bool
      */
     public function addPassword(int $id, string $passwordHashed): bool {

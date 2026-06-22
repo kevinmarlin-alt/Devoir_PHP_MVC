@@ -116,7 +116,7 @@ class Travel {
     /**
      * Retourne un tableau des propriétées
      * 
-     * @return array
+     * @return array<string,mixed>
      */
     public function toArray(): array {
         return [

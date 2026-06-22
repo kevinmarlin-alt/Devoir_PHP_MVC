@@ -75,7 +75,17 @@ $router->group('/employees', function ($router) {
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
         header('Content-Type: application/json');
-        return json_encode((new EmployeeModel)->findEmployeeById($id)->toArray());
+        $employee = (new EmployeeModel)->findEmployeeById($id);
+
+        if ($employee === null) {
+            http_response_code(404);
+
+            return json_encode([
+                'error' => 'Employee not found'
+            ]);
+        }
+
+        return json_encode($employee->toArray());
     });
 
     $router->put('/update/:id', function(int $id, Request $request) {
@@ -126,7 +136,11 @@ $router->group(('/travels'), function($router) {
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
         header('Content-Type: application/json');
-        return json_encode((new TravelsControllers)->getTravelById($id)->toArray());
+        $travel = (new TravelsControllers)->getTravelById($id);
+        if($travel === null) {
+            return null;
+        }
+        return json_encode($travel->toArray());
     });
 
     $router->get('/create', function() {

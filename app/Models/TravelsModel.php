@@ -148,7 +148,7 @@ class TravelsModel {
     /**
      * Crée un trajet 
      * 
-     * @param array $data
+     * @param array<string,mixed> $data
      * @return bool
      */
     public function addTravel(array $data): bool {

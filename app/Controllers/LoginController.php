@@ -43,9 +43,14 @@ class LoginController extends Controller {
         $password = $_POST["password"];
         
         $employee = (new EmployeeModel)->findEmployeeByEmail($email);
-        $passwordMatch = password_verify($password, $employee->getPassword());
+        if($employee === null) {
+            $error = "Erreur lors de la récuperartion des données lié a cette adresse email !";
+            $this->render('Connexion', 'login', compact('error'));
+            exit;
+        }
 
-        if(!$passwordMatch || !$employee) {
+        $passwordMatch = password_verify($password, $employee->getPassword());
+        if(!$passwordMatch) {
             $error = "Email ou mot de passe incorrect !";
             $this->render('Connexion', 'login', compact('error'));
             exit;
