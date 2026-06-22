@@ -1,3 +1,8 @@
+<?php
+use App\Entity\Travel;
+
+/** @var Travel[] $travels */
+?>
 <script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
 <h2>Trajets disponible</h2>
 <?php if(isset($travels) && $travels): ?>

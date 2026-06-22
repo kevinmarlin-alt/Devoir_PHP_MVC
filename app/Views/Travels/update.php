@@ -1,3 +1,14 @@
+<?php 
+use App\Entity\Travel;
+use App\Entity\Agency;
+use App\Entity\Employee;
+
+/** @var Employee $employee */
+/** @var Agency[] $agencies */
+/** @var Travel $travel */
+
+?>
+
 <script src="/assets/javascript/travel.update.js" type="text/javascript" defer></script>
 <nav class="mb-4">
     <a href="/">Accueil</a>
@@ -13,6 +24,7 @@
                 <label class="form-label" for="departure_agency_id">Départ</label><br>
                 <select class="form-control" name="departure_agency_id" id="departure_agency_id" required >
                     <?php foreach($agencies as $agency): ?>
+                    
                         <?php if($travel->getDepartureAgency() === $agency->getCity()): ?>
                             <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>
                         <?php else: ?>

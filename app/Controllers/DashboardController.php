@@ -33,7 +33,14 @@ class DashboardController extends Controller {
         $employees = (new EmployeeController)->getAllEmployees();
         $agencies = (new AgenciesController)->getAllAgencies();
         $travels = (new TravelsControllers)->getAllTravels();
-        $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
+        if(!isset($_SESSION['user']['id'])) {
+            exit;
+        }
+        /**
+         * @var int $id
+         */
+        $id = $_SESSION['user']['id'];
+        $employee = (new EmployeeController)->getEmployeeById($id);
         $this->render(
             'Tableau de bord', 
             'dashboard', 
@@ -44,12 +51,18 @@ class DashboardController extends Controller {
     /**
      * Affiche la page de modification d'une agence
      * 
-     * @param int $id
+     * @param int $idAgency
      * @return void
      */
-    public function updateAgencyIndex(int $id): void {
-        $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
-        $agency = $this->agenciesController->getAgencyById($id);
+    public function updateAgencyIndex(int $idAgency): void {
+        /** @var array{id:int, role:string} $user */
+        $user = $_SESSION['user'];
+
+        /** @var int $id */
+        $id = $user['id'];
+        
+        $employee = (new EmployeeController)->getEmployeeById($id);
+        $agency = $this->agenciesController->getAgencyById($idAgency);
  
         $this->render(
             'Mettre a jour un trajet',

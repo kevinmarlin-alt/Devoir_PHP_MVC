@@ -1,3 +1,15 @@
+<?php 
+use App\Entity\Travel;
+use App\Entity\Agency;
+use App\Entity\Employee;
+
+/** @var Employee[] $employees */
+/** @var Employee $employee */
+/** @var Agency[] $agencies */
+/** @var Travel[] $travels */
+
+?>
+
 <script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
 <script src="/assets/javascript/agencies.table.js" type="text/javascript" defer></script>
 <script src="/assets/javascript/employee.update.js" type="text/javascript" defer></script>
