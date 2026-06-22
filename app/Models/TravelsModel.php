@@ -28,9 +28,11 @@ class TravelsModel {
 
     /**
      * Initialise le modèle
+     * 
+     * @param ?PDO $pdo
      */
-    public function __construct() {
-        $this->pdo = Database::getConnection();
+    public function __construct(?PDO $pdo = null) {
+        $this->pdo = $pdo ?? Database::getConnection();
     }
 
     /**
@@ -72,9 +74,9 @@ class TravelsModel {
         return new Travel(
             id: $result['id'],
             departure_agency: $result['departure_agency'],
-            departure_at: new DateTime($result['departure_at']),
+            departure_at: $result['departure_at'],
             arrival_agency: $result['arrival_agency'],
-            arrival_at: new DateTime($result['arrival_at']),
+            arrival_at: $result['arrival_at'],
             seats_available: $result['seats_available'],
             employee_id: $result['employee_id'],
             seats_total: $result['seats_total']
@@ -86,9 +88,9 @@ class TravelsModel {
      * 
      * Retourne tous les trajets qui sont encore disponible à la date et heure actuelle et uniquement les trajets qui disposent encore de places disponible.
      * 
-     * @return Travel[]|null
+     * @return Travel[]|array
      */
-    public function findAllTravelsAvailable(): array|null {
+    public function findAllTravelsAvailable(): array {
         
         $query = $this->pdo->prepare(
             "SELECT 
@@ -123,7 +125,7 @@ class TravelsModel {
         $result = $query->fetchAll();
 
         if(!$result) {
-            return null;
+            return [];
         }
 
         $travels = [];
@@ -131,9 +133,9 @@ class TravelsModel {
             array_push($travels, new Travel(
                 id: $travel['id'],
                 departure_agency: $travel['departure_agency'],
-                departure_at: new DateTime($travel['departure_at']),
+                departure_at: $travel['departure_at'],
                 arrival_agency: $travel['arrival_agency'],
-                arrival_at: new DateTime($travel['arrival_at']),
+                arrival_at: $travel['arrival_at'],
                 seats_available: $travel['seats_available'],
                 employee_id: $travel['employee_id'],
                 seats_total: $travel['seats_total']
@@ -146,10 +148,10 @@ class TravelsModel {
     /**
      * Crée un trajet 
      * 
-     * @param mixed $data
+     * @param array $data
      * @return bool
      */
-    public function addTravel(mixed $data): bool {
+    public function addTravel(array $data): bool {
         $query = $this->pdo->prepare(
             "INSERT INTO travels (
                 departure_agency_id,
@@ -231,9 +233,9 @@ class TravelsModel {
     /**
      * Recherche tous les trajets
      * 
-     * @return Travel[]|null
+     * @return Travel[]|array
      */
-    public function findAllTravels(): array|null {
+    public function findAllTravels(): array {
         $query = $this->pdo->prepare(
             "SELECT 
                 t.id,
@@ -262,7 +264,7 @@ class TravelsModel {
         $result = $query->fetchAll();
 
         if(!$result) {
-            return null;
+            return [];
         }
 
         $travels = [];
@@ -270,9 +272,9 @@ class TravelsModel {
             array_push($travels, new Travel(
                 id: $travel['id'],
                 departure_agency: $travel['departure_agency'],
-                departure_at: new DateTime($travel['departure_at']),
+                departure_at: $travel['departure_at'],
                 arrival_agency: $travel['arrival_agency'],
-                arrival_at: new DateTime($travel['arrival_at']),
+                arrival_at: $travel['arrival_at'],
                 seats_available: $travel['seats_available'],
                 employee_id: $travel['employee_id'],
                 seats_total: $travel['seats_total']

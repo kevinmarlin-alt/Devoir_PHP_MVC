@@ -51,6 +51,7 @@ class EmployeeController {
     }
 
     public function updatePassword(int $id, array $data): bool {
-        return $this->employeeModel->addPassword($id, $data['pwd']);
+        $passwordHashed = password_hash($data['pwd'], PASSWORD_BCRYPT);
+        return $this->employeeModel->addPassword($id, $passwordHashed);
     }
 }

@@ -28,8 +28,8 @@ class EmployeeModel {
     /**
      * Initialise le modèle
      */
-    public function __construct() {
-        $this->pdo = Database::getConnection();
+    public function __construct(?PDO $pdo = null) {
+        $this->pdo = $pdo ?? Database::getConnection();
     }
 
     /**
@@ -104,9 +104,9 @@ class EmployeeModel {
     /**
      * Recherche la liste de tous les employés
      * 
-     * @return Employee[]|null
+     * @return Employee[]|array
      */
-    public function findAllEmployees(): array|null {
+    public function findAllEmployees(): array {
         $query = $this->pdo->prepare(
             "SELECT * FROM employees"
         );
@@ -116,7 +116,7 @@ class EmployeeModel {
         $result = $query->fetchAll();
 
         if(!$result) {
-            return null;
+            return [];
         }
 
         $employees = [];
@@ -142,10 +142,8 @@ class EmployeeModel {
      * @param string $password
      * @return bool
      */
-    public function addPassword(int $id, string $password): bool {
-        $passwordHashed = password_hash($password, PASSWORD_BCRYPT);
-        var_dump($passwordHashed);
-        
+    public function addPassword(int $id, string $passwordHashed): bool {
+       
         $query = $this->pdo->prepare(
             "UPDATE 
                 employees 
@@ -157,7 +155,7 @@ class EmployeeModel {
 
         return $query->execute([
             ':passwordHashed' => $passwordHashed,
-            'id' => $id
+            ':id' => $id
         ]);
     }
 
