@@ -37,9 +37,9 @@ class AgenciesModel {
     /**
      * Recherche toutes les agences
      * 
-     * @return Agency[]|null
+     * @return Agency[]|array
      */
-    public function findAllAgencies(): array|null {
+    public function findAllAgencies(): array {
         /**
          * @var PDOStatement|false $query
          */
@@ -54,7 +54,7 @@ class AgenciesModel {
         $result = $query->fetchAll();
 
         if(!$result) {
-            return null;
+            return [];
         }
 
         $agencies = [];

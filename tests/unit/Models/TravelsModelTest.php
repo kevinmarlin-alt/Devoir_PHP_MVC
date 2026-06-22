@@ -135,7 +135,7 @@ class TravelsModelTest extends TestCase {
         $this->assertContainsOnlyInstancesOf(Travel::class, $travels);
     }
 
-    public function testFindAllTravelsAvailableReturnNull() {
+    public function testFindAllTravelsAvailableReturnEmptyArray() {
         $pdo = $this->createMock(PDO::class);
         $query = $this->createMock(PDOStatement::class);
 
@@ -155,7 +155,8 @@ class TravelsModelTest extends TestCase {
 
         $travels = $model->findAllTravelsAvailable();
 
-        $this->assertNull($travels);
+        $this->assertIsArray($travels);
+        $this->assertCount(0, $travels);
     }
 
     public function testAddTravel() {
@@ -275,13 +276,13 @@ class TravelsModelTest extends TestCase {
 
         $model = new TravelsModel($pdo);
 
-        $travels = $model->findAllTravelsAvailable();
+        $travels = $model->findAllTravels();
         
         $this->assertIsArray($travels);
         $this->assertContainsOnlyInstancesOf(Travel::class, $travels);
     }
 
-    public function testFindAllTravelsReturnNull() {
+    public function testFindAllTravelsReturnEmptyArray() {
         $pdo = $this->createMock(PDO::class);
         $query = $this->createMock(PDOStatement::class);
 
@@ -299,9 +300,10 @@ class TravelsModelTest extends TestCase {
 
         $model = new TravelsModel($pdo);
 
-        $travels = $model->findAllTravelsAvailable();
+        $travels = $model->findAllTravels();
         
-        $this->assertNull($travels);
+        $this->assertIsArray($travels);
+        $this->assertCount(0, $travels);
     }
 
 }

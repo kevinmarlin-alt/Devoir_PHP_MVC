@@ -104,9 +104,9 @@ class EmployeeModel {
     /**
      * Recherche la liste de tous les employés
      * 
-     * @return Employee[]|null
+     * @return Employee[]|array
      */
-    public function findAllEmployees(): array|null {
+    public function findAllEmployees(): array {
         $query = $this->pdo->prepare(
             "SELECT * FROM employees"
         );
@@ -116,7 +116,7 @@ class EmployeeModel {
         $result = $query->fetchAll();
 
         if(!$result) {
-            return null;
+            return [];
         }
 
         $employees = [];

@@ -172,6 +172,29 @@ class EmployeeModelTest extends TestCase {
         $this->assertContainsOnlyInstancesOf(Employee::class, $employees);
     }
 
+    public function testFindAllEmployeesReturnEmptyArray() {
+        $pdo = $this->createMock(PDO::class);
+        $query = $this->createMock(PDOStatement::class);
+
+        $pdo->expects($this->once())
+            ->method('prepare')
+            ->willReturn($query);
+
+        $query->expects($this->once())
+            ->method('execute')
+            ->willReturn(true);
+
+        $query->expects($this->once())
+            ->method('fetchAll')
+            ->willReturn([]);
+
+        $model = new EmployeeModel($pdo);
+
+        $employees = $model->findAllEmployees();
+        $this->assertIsArray($employees);
+        $this->assertCount(0, $employees);
+    }
+
         public function testAddPassword() {
             $pdo = $this->createMock(PDO::class);
             $query = $this->createMock(PDOStatement::class);

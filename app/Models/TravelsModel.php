@@ -88,9 +88,9 @@ class TravelsModel {
      * 
      * Retourne tous les trajets qui sont encore disponible à la date et heure actuelle et uniquement les trajets qui disposent encore de places disponible.
      * 
-     * @return Travel[]|null
+     * @return Travel[]|array
      */
-    public function findAllTravelsAvailable(): array|null {
+    public function findAllTravelsAvailable(): array {
         
         $query = $this->pdo->prepare(
             "SELECT 
@@ -125,7 +125,7 @@ class TravelsModel {
         $result = $query->fetchAll();
 
         if(!$result) {
-            return null;
+            return [];
         }
 
         $travels = [];
@@ -233,9 +233,9 @@ class TravelsModel {
     /**
      * Recherche tous les trajets
      * 
-     * @return Travel[]|null
+     * @return Travel[]|array
      */
-    public function findAllTravels(): array|null {
+    public function findAllTravels(): array {
         $query = $this->pdo->prepare(
             "SELECT 
                 t.id,
@@ -264,7 +264,7 @@ class TravelsModel {
         $result = $query->fetchAll();
 
         if(!$result) {
-            return null;
+            return [];
         }
 
         $travels = [];
