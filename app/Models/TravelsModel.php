@@ -174,9 +174,9 @@ class TravelsModel {
 
         return $query->execute([
             'departure_agency_id' => $data['departure_agency_id'],
-            'departure_at' => $data['departure_date'] . " " . $data['departure_time'] . ":00",
+            'departure_at' => (new DateTime($data['departure_date'] . " " . $data['departure_time']))->format('Y-m-d H:i:s'),
             'arrival_agency_id' => $data['arrival_agency_id'],
-            'arrival_at' => $data['arrival_date'] . " " . $data['arrival_time']. ":00",
+            'arrival_at' => (new DateTime($data['arrival_date'] . " " . $data['arrival_time']))->format('Y-m-d H:i:s'),
             'seats_total' => $data['seats_total'],
             'seats_available' => $data['seats_total'],
             'employee_id' => $data['employee_id'],
