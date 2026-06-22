@@ -1,3 +1,13 @@
+<?php 
+
+use App\Entity\Agency;
+use App\Entity\Employee;
+
+/** @var Employee $employee */
+/** @var Agency[] $agencies */
+
+?>
+
 <nav class="mb-4">
     <a href="/">Accueil</a>
 </nav>

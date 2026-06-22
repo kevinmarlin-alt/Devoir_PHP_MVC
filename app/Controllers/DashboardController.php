@@ -60,12 +60,12 @@ class DashboardController extends Controller {
 
         /** @var int $id */
         $id = $user['id'];
-        
+
         $employee = (new EmployeeController)->getEmployeeById($id);
         $agency = $this->agenciesController->getAgencyById($idAgency);
  
         $this->render(
-            'Mettre a jour un trajet',
+            'Mettre a jour une agence',
             'Agencies/update',
             compact('employee', 'agency')
         );

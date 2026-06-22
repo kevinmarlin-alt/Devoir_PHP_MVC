@@ -24,7 +24,7 @@ use App\Entity\Employee;
 <div class="row mb-4">
     <section class="card p-4" id="travels">
         <h2>Trajets</h2>
-        <?php if(isset($travels)): ?>
+        <?php if($travels): ?>
             <table class="table table-bordered text-center table-sm table-striped">
                 <tr class="table-primary">
                     <th>ID</th>
@@ -76,7 +76,7 @@ use App\Entity\Employee;
 <div class="row gap-4">
     <section class="col card p-4" id="users">
         <h2>Utilisateurs</h2>
-        <?php if(isset($employees)): ?>
+        <?php if($employees): ?>
             <p>
                 <a class="employees__updatePwdCollapse--Btn" data-bs-toggle="collapse" href="#employeesPasswordCollapse" role="button" aria-expanded="false" aria-controls="employeesPasswordCollapse">
                     Ajouter ou modifier un mot de passe
@@ -145,7 +145,7 @@ use App\Entity\Employee;
                 </form>
             </div>
         </div>
-        <?php if(isset($agencies)): ?>
+        <?php if($agencies): ?>
             <table class="table table-bordered text-center table-sm table-striped">
                 <tr class="table-primary">
                     <th>ID</th>

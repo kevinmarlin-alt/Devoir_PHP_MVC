@@ -1,3 +1,11 @@
+<?php 
+
+use App\Entity\Agency;
+
+/** @var Agency $agency */
+
+?>
+
 <script src="/assets/javascript/agency.update.js" type="text/javascript" defer></script>
 <nav>
     <a href="/dashboard/#agencies">Retour</a>
