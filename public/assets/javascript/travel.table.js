@@ -36,7 +36,6 @@ async function showModalOnClick(e) {
     }
 
     employee = await employeeResponse.json()
-    console.log(employee);
 
     modal.querySelector('#modal_owner').innerHTML = `${employee.firstname} ${employee.lastname}`;
     modal.querySelector('#modal_phone').innerHTML = employee.phone;

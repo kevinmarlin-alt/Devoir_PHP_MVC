@@ -128,13 +128,12 @@ $router->group('/agencies', function($router) {
         AdminMiddleware::handle();
         $data = json_decode($request->getContent(), true);
         (new AgenciesController)->createNewAgency($data);
-        header('Location: /dashboard/#agencies');
     });
 
     $router->delete('/:id', function(int $id) {
         AuthMiddleware::handle();
         AdminMiddleware::handle();
-        (new DashboardController)->deleteAgency($id);       
+        (new AgenciesController)->deleteAgency($id);       
     });
 
     $router->get('/update/', function () {
@@ -190,7 +189,7 @@ $router->group(('/travels'), function($router) {
     $router->delete('/delete/:id', function(int $id) {
         AuthMiddleware::handle();
         (new TravelsControllers)->deleteTravel($id);
-        
+
     });
 });
 

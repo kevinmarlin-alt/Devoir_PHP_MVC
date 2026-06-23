@@ -70,7 +70,6 @@ async function handleSubmit(e) {
 
 
 function checkValidation() {
-    //formUpdate.classList.add('was-validated')
     if(checkAgenciesSame()) {
         return false
     }

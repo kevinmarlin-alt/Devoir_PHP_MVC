@@ -2,11 +2,12 @@ const deleteAgencyBtnAll = document.querySelectorAll('.table__agency--delete');
 const modalConfirmDeleteAgencyBtn = document.querySelector('.agency__modal--confirm');
 const deleteModal = document.getElementById('agencyDeleteModal')
 
-deleteAgencyBtnAll.forEach(btn => btn.addEventListener('click', handleModalDelet));
+deleteAgencyBtnAll.forEach(btn => btn.addEventListener('click', handleModalDelete));
 modalConfirmDeleteAgencyBtn.addEventListener('click', handleConfirmDelete);
 
 async function handleConfirmDelete(e){
     e.preventDefault();
+    
     idAgency = deleteModal.getAttribute('data-id-agency')
     
     console.log(idAgency)
@@ -14,14 +15,13 @@ async function handleConfirmDelete(e){
         method: 'DELETE'
     })
 
-    window.location.reload();
+    window.location.href = '/dashboard';
 }
 
 
-async function handleModalDelet(e) {
+async function handleModalDelete(e) {
     e.preventDefault();
+
     idAgency = e.target.closest('tr').getAttribute('data-id-agency')
     deleteModal.setAttribute('data-id-agency', idAgency)
-    console.log(deleteModal.getAttribute('data-id-agency'))
-
 }

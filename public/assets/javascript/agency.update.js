@@ -20,5 +20,5 @@ async function handleSubmit(e) {
         return
     }
 
-    window.location.href = '/dashboard/#agencies';
+    window.location.href = '/dashboard';
 }

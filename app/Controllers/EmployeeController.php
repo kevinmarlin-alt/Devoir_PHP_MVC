@@ -9,6 +9,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Banner;
 use App\Entity\Employee;
 use App\Models\EmployeeModel;
 
@@ -55,9 +56,21 @@ class EmployeeController {
      * 
      * @param int $id
      * @param array<string,string> $data
+     * @return void
      */
-    public function updatePassword(int $id, array $data): bool {
+    public function updatePassword(int $id, array $data): void {
         $passwordHashed = password_hash($data['pwd'], PASSWORD_BCRYPT);
-        return $this->employeeModel->addPassword($id, $passwordHashed);
+        $pwd = $this->employeeModel->addPassword($id, $passwordHashed);
+        if($pwd) {
+            Banner::add(
+                type: 'success',
+                message: 'Le mot de passe a bien été mis à jour.'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'Le mot de passe n\'a pas été mis à jour.'
+            );
+        }
     }
 }

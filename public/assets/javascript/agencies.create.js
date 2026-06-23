@@ -21,14 +21,13 @@ async function handleSubmit(e) {
         },
         body: JSON.stringify(data)
     })
-    console.log(request)
     
     if(!request.ok) {
         
         return
     }
 
-    window.location.reload()
+    window.location.href = '/dashboard'
 }
 
 function checkCityIsEmpty(city) {

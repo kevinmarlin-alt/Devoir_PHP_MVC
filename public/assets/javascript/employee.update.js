@@ -31,7 +31,7 @@ async function handleSubmit(e) {
 
     updatePwdCollapseBtn.click()
 
-    window.location.href = '/dashboard/#employees';
+    window.location.reload();
 }
 
 function clearFeedback() {
