@@ -9,6 +9,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Banner;
 use App\Core\Controller;
 use App\Entity\Travel;
 use App\Models\TravelsModel;
@@ -89,7 +90,18 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function createNewTravel(): void {
-        (new TravelsModel)->addTravel($_POST);
+        $add = $this->travelsModel->addTravel($_POST);
+        if($add) {
+            Banner::add(
+                type: 'success',
+                message: 'Le trajet a bien été enregistré'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'Le trajet n\'a pas été enregistré'
+            );
+        }
         header('Location: /');
   
     }
