@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <?php
 /** @var string $view */
 /** @var string $title */
 ?>
-<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
