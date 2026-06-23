@@ -11,6 +11,7 @@ use App\Controllers\EmployeeController;
 use App\Controllers\NotFoundController;
 use App\Middlewares\AdminMiddleware;
 use App\Models\EmployeeModel;
+use App\Entity\Agency;
 
 use Buki\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
@@ -102,10 +103,31 @@ $router->group('/employees', function ($router) {
  */
 $router->group('/agencies', function($router) {
 
-    $router->post('/create', function() {
+    $router->get('/', function(Response $response) {
         AuthMiddleware::handle();
         AdminMiddleware::handle();
-        (new AgenciesController)->createNewAgency($_POST);
+        header('Content-Type: application/json');
+        $agencies = (new AgenciesController)->getAllAgencies();
+    
+        if ($agencies === []) {
+            http_response_code(404);
+
+            return json_encode([
+                'error' => 'Agencies not found'
+            ]);
+        }
+
+        $response = array_map(fn(Agency $agency) => $agency->toArray(), $agencies);
+        return json_encode($response);
+
+
+    });
+
+    $router->post('/create', function(Request $request) {
+        AuthMiddleware::handle();
+        AdminMiddleware::handle();
+        $data = json_decode($request->getContent(), true);
+        (new AgenciesController)->createNewAgency($data);
         header('Location: /dashboard/#agencies');
     });
 
