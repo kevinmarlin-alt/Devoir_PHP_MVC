@@ -1,5 +1,18 @@
+<?php 
+use App\Entity\Travel;
+use App\Entity\Agency;
+use App\Entity\Employee;
+
+/** @var Employee[] $employees */
+/** @var Employee $employee */
+/** @var Agency[] $agencies */
+/** @var Travel[] $travels */
+
+?>
+
 <script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
 <script src="/assets/javascript/agencies.table.js" type="text/javascript" defer></script>
+<script src="/assets/javascript/agencies.create.js" type="text/javascript" defer></script>
 <script src="/assets/javascript/employee.update.js" type="text/javascript" defer></script>
 
 <nav class="mb-4">
@@ -12,7 +25,7 @@
 <div class="row mb-4">
     <section class="card p-4" id="travels">
         <h2>Trajets</h2>
-        <?php if(isset($travels)): ?>
+        <?php if($travels): ?>
             <table class="table table-bordered text-center table-sm table-striped">
                 <tr class="table-primary">
                     <th>ID</th>
@@ -64,7 +77,7 @@
 <div class="row gap-4">
     <section class="col card p-4" id="users">
         <h2>Utilisateurs</h2>
-        <?php if(isset($employees)): ?>
+        <?php if($employees): ?>
             <p>
                 <a class="employees__updatePwdCollapse--Btn" data-bs-toggle="collapse" href="#employeesPasswordCollapse" role="button" aria-expanded="false" aria-controls="employeesPasswordCollapse">
                     Ajouter ou modifier un mot de passe
@@ -72,10 +85,10 @@
             </p>
             <div class="collapse w-50" id="employeesPasswordCollapse">
                 <div class="card card-body mb-4">
-                    <form action="#" method="">
+                    <form action="#" method="" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <div class="mb-3">
-                                <label class="form-label" for="email">Adresse email</label><br>
+                                <label class="form-label" for="email">Email</label><br>
                                 <select class="form-control" name="email" id="email" required >
                                     <?php foreach($employees as $employee): ?>
                                         <option value="<?= $employee->getId() ?>"><?= $employee->getEmail() ?></option>
@@ -84,10 +97,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="pwd" class="form-label">Nouveau mot de passe</label>
-                                <input type="text" class="form-control" name="pwd" id="pwd">
+                                <input type="password" class="form-control" name="pwd" id="pwd" required >
+                                <div class="invalid-feedback">
+                                    Le mot de passe ne peut être vide !
+                                </div>
                             </div>
                         </div>
-                        <input type="hidden" name="idEmployee" value="<?= $employee->getiD() ?>">
+                        <input type="hidden" name="idEmployee" id="idEmployee" value="<?= $employee->getiD() ?>">
                         <button type="submit" class="btn btn-primary">Modifier</button>
                     </form>
                 </div>
@@ -124,16 +140,19 @@
         </p>
         <div class="collapse" id="createAgencyCollapse">
             <div class="card card-body mb-4">
-                <form action="/agencies/create" method="post">
+                <form action="/agencies/create" method="post" id="agency-form"  class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="city" class="form-label">Nom de la ville de l'agence</label>
                         <input type="text" class="form-control" name="city" id="city">
+                        <div class="invalid-feedback">
+                            Le nom de la ville ne peut être vide ou identique à une agence existante !
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Ajouter</button>
                 </form>
             </div>
         </div>
-        <?php if(isset($agencies)): ?>
+        <?php if($agencies): ?>
             <table class="table table-bordered text-center table-sm table-striped">
                 <tr class="table-primary">
                     <th>ID</th>

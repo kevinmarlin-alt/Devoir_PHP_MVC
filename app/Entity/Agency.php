@@ -32,4 +32,17 @@ class Agency {
     public function getCity(): string{
         return $this->city;
     }
+
+    /**
+     * Retourne un tableau des propriétées
+     * 
+     * @return array<string,mixed>
+     */
+    public function toArray(): mixed
+    {
+        return [
+            'id' => $this->id,
+            'city' => $this->city,
+        ];
+    }
 }

@@ -1,3 +1,11 @@
+<?php 
+
+use App\Entity\Employee;
+
+/** @var Employee $employee */
+
+?>
+
 <header class="mb-4">
     <nav class="navbar bg-body-primary">
         <div class="container-fluid">

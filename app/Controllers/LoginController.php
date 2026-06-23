@@ -11,6 +11,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\EmployeeModel;
+use App\Entity\Employee;
 
 /**
  * Gestion de l'authentification
@@ -39,13 +40,23 @@ class LoginController extends Controller {
      * @return void
      */
     public function login(): void {
+        /** @var string $email */
         $email = $_POST["email"];
-        $password = $_POST["password"];
         
+        /** @var string $password */
+        $password = $_POST["password"];
+     
+        /** @var Employee|null $employee */
         $employee = (new EmployeeModel)->findEmployeeByEmail($email);
-        $passwordMatch = password_verify($password, $employee->getPassword());
+        
+        if($employee === null) {
+            $error = "Erreur lors de la récuperartion des données lié a cette adresse email !";
+            $this->render('Connexion', 'login', compact('error'));
+            exit;
+        }
 
-        if(!$passwordMatch || !$employee) {
+        $passwordMatch = password_verify($password, $employee->getPassword());
+        if(!$passwordMatch) {
             $error = "Email ou mot de passe incorrect !";
             $this->render('Connexion', 'login', compact('error'));
             exit;

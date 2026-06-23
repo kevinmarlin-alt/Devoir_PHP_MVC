@@ -1,3 +1,14 @@
+<?php 
+use App\Entity\Travel;
+use App\Entity\Agency;
+use App\Entity\Employee;
+
+/** @var Employee $employee */
+/** @var Agency[] $agencies */
+/** @var Travel $travel */
+
+?>
+
 <script src="/assets/javascript/travel.update.js" type="text/javascript" defer></script>
 <nav class="mb-4">
     <a href="/">Accueil</a>
@@ -5,7 +16,7 @@
 
 <h2 class="mb-4">Mettre à jour le trajet</h2>
 
-<form action="#" method="">
+<form action="#" method="" class="needs-validation" novalidate>
     <div class="d-flex gap-4 mb-4">
         <fieldset class="w-50">
             <legend>Informations du trajet</legend>
@@ -13,6 +24,7 @@
                 <label class="form-label" for="departure_agency_id">Départ</label><br>
                 <select class="form-control" name="departure_agency_id" id="departure_agency_id" required >
                     <?php foreach($agencies as $agency): ?>
+                    
                         <?php if($travel->getDepartureAgency() === $agency->getCity()): ?>
                             <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>
                         <?php else: ?>
@@ -20,19 +32,25 @@
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
+                <div class="invalid-feedback">
+                    L'agence de départ et d'arrvié ne peuvent être identique !
+                </div>
             </div>
-            <div class="d-flex gap-2 mb-3">
-                <div class="w-50">
-                    <label class="form-label" for="departure_date">Date</label><br>
-                    <input class="form-control" type="date" name="departure_date" id="departure_date" value="<?= $travel->getDepartureAt()->format('Y-m-d') ?>">
+            <div class="mb-3" >
+                <div class="d-flex gap-2">
+                    <div class="w-50">
+                        <label class="form-label" for="departure_date">Date</label><br>
+                        <input class="form-control datetime-js" type="date" name="departure_date" id="departure_date" value="<?= $travel->getDepartureAt()->format('Y-m-d') ?>" required>
+                    </div>
+                    <div class="w-50">
+                        <label class="form-label" for="departure_time">Heure</label><br>
+                        <input class="form-control datetime-js" type="time" name="departure_time" id="departure_time" value="<?= $travel->getDepartureAt()->format('H:i') ?>" required>
+                    </div>
                 </div>
-                <div class="w-50">
-                    <label class="form-label" for="departure_time">Heure</label><br>
-                    <input class="form-control" type="time" name="departure_time" id="departure_time" value="<?= $travel->getDepartureAt()->format('H:i') ?>">
-                </div>
+                <div class="datetime-feedback"></div>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="arrival_agency_id">Départ</label><br>
+                <label class="form-label" for="arrival_agency_id">Arrivée</label><br>
                 <select class="form-control"  name="arrival_agency_id" id="arrival_agency_id" required >
                     <?php foreach($agencies as $agency): ?>
                         <?php if($travel->getArrivalAgency() === $agency->getCity()): ?>
@@ -42,16 +60,22 @@
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
+                <div class="invalid-feedback">
+                    L'agence de départ et d'arrvié ne peuvent être identique !
+                </div>
             </div>
-            <div class="d-flex gap-2 mb-3">
-                <div class="w-50">
-                    <label class="form-label" for="arrival_date">Date</label><br>
-                    <input class="form-control" type="date" name="arrival_date" id="arrival_date" value="<?= $travel->getArrivalAt()->format('Y-m-d') ?>">
+            <div class="mb-3" >
+                <div class="d-flex gap-2">
+                    <div class="w-50">
+                        <label class="form-label" for="arrival_date">Date</label><br>
+                        <input class="form-control datetime-js" type="date" name="arrival_date" id="arrival_date" value="<?= $travel->getArrivalAt()->format('Y-m-d') ?>" required>
+                    </div>
+                    <div class="w-50">
+                        <label class="form-label" for="arrival_time">Heure</label><br>
+                        <input class="form-control datetime-js" type="time" name="arrival_time" id="arrival_time" value="<?= $travel->getArrivalAt()->format('H:i') ?>" required>
+                    </div>
                 </div>
-                <div class="w-50">
-                    <label class="form-label" for="arrival_time">Heure</label><br>
-                    <input class="form-control" type="time" name="arrival_time" id="arrival_time" value="<?= $travel->getArrivalAt()->format('H:i') ?>">
-                </div>
+                <div class="datetime-feedback feedback"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="seats_available">Nombre de places disponible</label><br>
@@ -61,9 +85,13 @@
                     name="seats_available"
                     id="seats_available"
                     min="0"
+                    max="<?= $travel->getSeatsTotal() ?>"
                     value="<?= $travel->getSeatsAvailable() ?>"
                     required
                     >
+                <div class="invalid-feedback">
+                    Le nombre de places disponible ne peut être suppérieur au nombre de places total !
+                </div>
             </div>
             <div>
                 <label class="form-label" for="seats_total">Nombre total de places</label><br>

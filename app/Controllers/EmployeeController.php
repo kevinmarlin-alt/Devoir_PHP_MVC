@@ -50,6 +50,12 @@ class EmployeeController {
         return $this->employeeModel->findAllEmployees();
     }
 
+    /**
+     * Met à jour le mot de passe d'un employé
+     * 
+     * @param int $id
+     * @param array<string,string> $data
+     */
     public function updatePassword(int $id, array $data): bool {
         $passwordHashed = password_hash($data['pwd'], PASSWORD_BCRYPT);
         return $this->employeeModel->addPassword($id, $passwordHashed);

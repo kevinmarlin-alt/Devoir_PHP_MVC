@@ -57,22 +57,30 @@ class AgenciesController {
      * @return void
      */
     public function createNewAgency(array $data): void {
-        if(!$this->isUnique($data['city'])) {
+        /**
+         * @var string $city
+         */
+        $city = $data['city'];
+        if(!$this->isUnique($city)) {
             header('Location: /dashboard/#agencies');
             exit;
         }
-        $this->agenciesModel->createAgency($data['city']);
+        $this->agenciesModel->createAgency($city);
     }
 
     /**
      * Met à jour le nom d'une agence
      * 
      * @param int $id
-     * @param mixed $data
+     * @param array<string,mixed> $data
      * @return void
      */
     public function updateAgency(int $id, mixed $data): void {
-        if(!$this->isUnique($data['city'])) {
+        /**
+         * @var string $city
+         */
+        $city = $data['city'];
+        if(!$this->isUnique($city)) {
             header('Location: /dashboard/#agencies');
             exit;
         }

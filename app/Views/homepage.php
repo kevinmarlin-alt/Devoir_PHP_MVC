@@ -1,6 +1,11 @@
+<?php
+use App\Entity\Travel;
+
+/** @var Travel[] $travels */
+?>
 <script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
 <h2>Trajets disponible</h2>
-<?php if(isset($travels) && $travels): ?>
+<?php if($travels): ?>
 
     <?php if(!isset($_SESSION['user'])): ?>
         <p>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</p>

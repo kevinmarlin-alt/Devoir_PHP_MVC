@@ -11,6 +11,7 @@ use App\Controllers\EmployeeController;
 use App\Controllers\NotFoundController;
 use App\Middlewares\AdminMiddleware;
 use App\Models\EmployeeModel;
+use App\Entity\Agency;
 
 use Buki\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,7 +76,17 @@ $router->group('/employees', function ($router) {
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
         header('Content-Type: application/json');
-        return json_encode((new EmployeeModel)->findEmployeeById($id)->toArray());
+        $employee = (new EmployeeModel)->findEmployeeById($id);
+
+        if ($employee === null) {
+            http_response_code(404);
+
+            return json_encode([
+                'error' => 'Employee not found'
+            ]);
+        }
+
+        return json_encode($employee->toArray());
     });
 
     $router->put('/update/:id', function(int $id, Request $request) {
@@ -92,10 +103,31 @@ $router->group('/employees', function ($router) {
  */
 $router->group('/agencies', function($router) {
 
-    $router->post('/create', function() {
+    $router->get('/', function(Response $response) {
         AuthMiddleware::handle();
         AdminMiddleware::handle();
-        (new AgenciesController)->createNewAgency($_POST);
+        header('Content-Type: application/json');
+        $agencies = (new AgenciesController)->getAllAgencies();
+    
+        if ($agencies === []) {
+            http_response_code(404);
+
+            return json_encode([
+                'error' => 'Agencies not found'
+            ]);
+        }
+
+        $response = array_map(fn(Agency $agency) => $agency->toArray(), $agencies);
+        return json_encode($response);
+
+
+    });
+
+    $router->post('/create', function(Request $request) {
+        AuthMiddleware::handle();
+        AdminMiddleware::handle();
+        $data = json_decode($request->getContent(), true);
+        (new AgenciesController)->createNewAgency($data);
         header('Location: /dashboard/#agencies');
     });
 
@@ -126,7 +158,11 @@ $router->group(('/travels'), function($router) {
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
         header('Content-Type: application/json');
-        return json_encode((new TravelsControllers)->getTravelById($id)->toArray());
+        $travel = (new TravelsControllers)->getTravelById($id);
+        if($travel === null) {
+            return null;
+        }
+        return json_encode($travel->toArray());
     });
 
     $router->get('/create', function() {
