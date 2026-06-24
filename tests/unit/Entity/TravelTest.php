@@ -3,7 +3,6 @@ namespace Tests\unit\Entity;
 
 use App\Entity\Travel;
 use DateTime;
-use Override;
 use PHPUnit\Framework\TestCase;
 
 class TravelTest extends TestCase {
@@ -35,5 +34,14 @@ class TravelTest extends TestCase {
 
     public function testToArray() {
         $this->assertIsArray($this->travel->toArray());
+
+        $this->assertArrayHasKey('id', $this->travel->toArray());
+        $this->assertArrayHasKey('departure_agency', $this->travel->toArray());
+        $this->assertArrayHasKey('departure_at', $this->travel->toArray());
+        $this->assertArrayHasKey('arrival_agency', $this->travel->toArray());
+        $this->assertArrayHasKey('arrival_at', $this->travel->toArray());
+        $this->assertArrayHasKey('seats_available', $this->travel->toArray());
+        $this->assertArrayHasKey('seats_total', $this->travel->toArray());
+        $this->assertArrayHasKey('employee_id', $this->travel->toArray());
     }
 }
