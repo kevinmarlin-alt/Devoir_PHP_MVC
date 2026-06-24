@@ -9,6 +9,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Banner;
 use App\Models\AgenciesModel;
 use App\Entity\Agency;
 
@@ -61,11 +62,27 @@ class AgenciesController {
          * @var string $city
          */
         $city = $data['city'];
-        if(!$this->isUnique($city)) {
-            header('Location: /dashboard/#agencies');
-            exit;
+        // if(!$this->isUnique($city)) {
+        //     header('Location: /dashboard');
+        //     exit;
+        // }
+
+        /** @var bool $add */
+        $add = $this->agenciesModel->createAgency($city);
+
+        if($add){
+            Banner::add(
+                type: 'success',
+                message: 'L\'agence a bien été ajoutée.'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'L\'agence n\'a pas été ajouté.'
+            );
         }
-        $this->agenciesModel->createAgency($city);
+        
+
     }
 
     /**
@@ -81,20 +98,46 @@ class AgenciesController {
          */
         $city = $data['city'];
         if(!$this->isUnique($city)) {
-            header('Location: /dashboard/#agencies');
+            header('Location: /dashboard');
             exit;
         }
-        $this->agenciesModel->updateAgency($id, $data);
+        /** @var bool $update */
+        $update = $this->agenciesModel->updateAgency($id, $data);
+        if($update){
+            Banner::add(
+                type: 'success',
+                message: 'L\'agence a bien été mise à jour.'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'L\'agence n\'a pas été mise à jour.'
+            );
+        }
     }
 
     /**
      * Supprime une agence
      * 
      * @param int $id
-     * @return bool
+     * @return void
      */
-    public function deleteAgency(int $id): bool {
-        return $this->agenciesModel->deleteOne($id);
+    public function deleteAgency(int $id): void {
+        /** @var bool $del */
+        $del = $this->agenciesModel->deleteOne($id);
+
+        if($del){
+            Banner::add(
+                type: 'success',
+                message: 'L\'agence a bien été supprimée.'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'L\'agence n\'a pas été supprimée.'
+            );
+        }
+        
     }
 
     /**

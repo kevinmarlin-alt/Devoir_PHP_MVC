@@ -9,6 +9,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Banner;
 use App\Core\Controller;
 use App\Entity\Travel;
 use App\Models\TravelsModel;
@@ -80,8 +81,19 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function updateTravel(int $id, mixed $data): void {
-        $this->travelsModel->updateTravel($id, $data);
-    }
+        $update = $this->travelsModel->updateTravel($id, $data);
+
+        if($update) {
+            Banner::add(
+                type: 'success',
+                message: 'Le trajet a bien été mis à jour.'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'Le trajet n\'a pas été mis à jour.'
+            );
+        }    }
 
     /**
      * Crée un trajet et recharge la page d'acceuil
@@ -89,7 +101,19 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function createNewTravel(): void {
-        (new TravelsModel)->addTravel($_POST);
+        $add = $this->travelsModel->addTravel($_POST);
+
+        if($add) {
+            Banner::add(
+                type: 'success',
+                message: 'Le trajet a bien été enregistré.'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'Le trajet n\'a pas été enregistré.'
+            );
+        }
         header('Location: /');
   
     }
@@ -120,6 +144,18 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function deleteTravel(int $id): void {
-        $this->travelsModel->deleteOne($id);
+        $del = $this->travelsModel->deleteOne($id);
+
+        if($del) {
+            Banner::add(
+                type: 'success',
+                message: 'Le trajet a bien été supprimé.'
+            );
+        } else {
+            Banner::add(
+                type: 'danger',
+                message: 'Le trajet n\'a pas été supprimé.'
+            );
+        }
     }
 }

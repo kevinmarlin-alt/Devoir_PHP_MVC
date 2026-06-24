@@ -70,22 +70,4 @@ class DashboardController extends Controller {
             compact('employee', 'agency')
         );
     }
-
-    /**
-     * Supprime une agence et affiche un message
-     * 
-     * @param int $id
-     * @return void
-     */
-    public function deleteAgency(int $id): void {
-        $isDelete = $this->agenciesController->deleteAgency($id);
-        if(!$isDelete) {
-            // message d'erreur 
-            exit;
-        }
-
-        // message de confirmation
-
-        
-    }
 }
