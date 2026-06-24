@@ -24,8 +24,13 @@ class HomepageController extends Controller {
     public function index(): void {
         $travels = (new TravelsControllers)->getAvailableTravels();
         $employee = null;
-        if(isset($_SESSION['user'])) {
-            $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
+        
+        /** @var array<string,mixed> $user */
+        $user = $_SESSION['user'];
+        if(isset($user['id'])) {
+            /** @var int $id */
+            $id = $user['id'];
+            $employee = (new EmployeeController)->getEmployeeById($id);
         }
         $this->render(
             title:'Accueil',

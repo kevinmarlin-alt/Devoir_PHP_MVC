@@ -13,7 +13,10 @@ use App\Entity\Employee;
                 <a class="navbar-brand">Touche pas au klaxon</a>
                 <a href="/login" class="btn btn-primary">Connexion</a>
             <?php else: ?>
-                    <?php switch($_SESSION['user']['role']): 
+                    <?php 
+                    /** @var array<string,string> $user */
+                    $user = $_SESSION['user'];
+                    switch($user['role']): 
                             case 'ADMIN': ?>
                                 <a href="/dashboard" class="navbar-brand">Touche pas au klaxon</a>
                                 <div class="d-flex align-items-center gap-4">

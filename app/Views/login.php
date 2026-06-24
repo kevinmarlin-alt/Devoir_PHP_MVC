@@ -1,3 +1,7 @@
+<?php
+/** @var string|null $error */
+?>
+
 <div class="d-flex justify-content-center">
     <div class="card w-50">
         <div class="card-body">

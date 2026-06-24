@@ -65,6 +65,18 @@ class TravelsModel {
 
         $query->execute(['id' => $id]);
 
+        /**
+         * @var array{
+         *      id:int,
+         *      departure_agency:string,
+         *      departure_at:string,
+         *      arrival_agency:string,
+         *      arrival_at:string,
+         *      seats_available:int,
+         *      seats_total:int,
+         *      employee_id:int,
+         * }|false $result
+         */
         $result = $query->fetch();
 
         if(!$result) {
@@ -129,6 +141,20 @@ class TravelsModel {
         }
 
         $travels = [];
+
+
+        /**
+         * @var array{
+         *      id:int,
+         *      departure_agency:string,
+         *      departure_at:string,
+         *      arrival_agency:string,
+         *      arrival_at:string,
+         *      seats_available:int,
+         *      seats_total:int,
+         *      employee_id:int,
+         * } $travel
+         */
         foreach($result as $travel) {
             array_push($travels, new Travel(
                 id: $travel['id'],
@@ -148,7 +174,17 @@ class TravelsModel {
     /**
      * Crée un trajet 
      * 
-     * @param array<string,mixed> $data
+     * @param array{
+     *      departure_agency_id:int,
+     *      departure_date:string,
+     *      departure_time:string,
+     *      arrival_agency_id:int,
+     *      arrival_date:string,
+     *      arrival_time:string,
+     *      seats_total:int,
+     *      seats_available:int,
+     *      employee_id:int
+     * } $data
      * @return bool
      */
     public function addTravel(array $data): bool {
@@ -171,12 +207,15 @@ class TravelsModel {
                 :employee_id
             )"
         );
-
+        
+        $departure_datetime = $data['departure_date'] . " " . $data['departure_time'];
+        $arrival_datetime = $data['arrival_date'] . " " . $data['arrival_time'];
+        
         return $query->execute([
             'departure_agency_id' => $data['departure_agency_id'],
-            'departure_at' => (new DateTime($data['departure_date'] . " " . $data['departure_time']))->format('Y-m-d H:i:s'),
+            'departure_at' => (new DateTime($departure_datetime))->format('Y-m-d H:i:s'),
             'arrival_agency_id' => $data['arrival_agency_id'],
-            'arrival_at' => (new DateTime($data['arrival_date'] . " " . $data['arrival_time']))->format('Y-m-d H:i:s'),
+            'arrival_at' => (new DateTime($arrival_datetime))->format('Y-m-d H:i:s'),
             'seats_total' => $data['seats_total'],
             'seats_available' => $data['seats_total'],
             'employee_id' => $data['employee_id'],
@@ -187,10 +226,20 @@ class TravelsModel {
      * Met à jour un trajet
      * 
      * @param int $id
-     * @param mixed $data
+     * @param array{
+     *      departure_agency_id:int,
+     *      departure_date:string,
+     *      departure_time:string,
+     *      arrival_agency_id:int,
+     *      arrival_date:string,
+     *      arrival_time:string,
+     *      seats_total:int,
+     *      seats_available:int,
+     *      employee_id:int
+     * } $data
      * @return bool
      */
-    public function updateTravel(int $id, mixed $data): bool {
+    public function updateTravel(int $id, array $data): bool {
         $query = $this->pdo->prepare(
             "UPDATE 
                 travels 
@@ -205,12 +254,15 @@ class TravelsModel {
                 id = :id"
         );
 
+        $departure_datetime = $data['departure_date'] . " " . $data['departure_time'];
+        $arrival_datetime = $data['arrival_date'] . " " . $data['arrival_time'];
+        
         return $query->execute([
             'id' => $id,
             'departure_agency_id' => $data['departure_agency_id'],
-            'departure_at' => $data['departure_date'] . " " . $data['departure_time'] . ":00",
+            'departure_at' => (new DateTime($departure_datetime))->format('Y-m-d H:i:s'),
             'arrival_agency_id' => $data['arrival_agency_id'],
-            'arrival_at' => $data['arrival_date'] . " " . $data['arrival_time']. ":00",
+            'arrival_at' => (new DateTime($arrival_datetime))->format('Y-m-d H:i:s'),
             'seats_available' => $data['seats_available'],
             'seats_total' => $data['seats_total']
         ]); 
@@ -268,6 +320,20 @@ class TravelsModel {
         }
 
         $travels = [];
+
+
+        /**
+         * @var array{
+         *      id:int,
+         *      departure_agency:string,
+         *      departure_at:string,
+         *      arrival_agency:string,
+         *      arrival_at:string,
+         *      seats_available:int,
+         *      seats_total:int,
+         *      employee_id:int,
+         * } $travel
+         */
         foreach($result as $travel) {
             array_push($travels, new Travel(
                 id: $travel['id'],

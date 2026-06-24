@@ -20,7 +20,10 @@ class AdminMiddleware {
      * @return void
      */
     public static function handle(): void {
-        if($_SESSION['user']['role'] !== 'ADMIN') {
+        /** @var array<string,string> $user */
+        $user = $_SESSION['user'];
+        
+        if($user['role'] !== 'ADMIN') {
             header('Location: /');
             exit;
         }

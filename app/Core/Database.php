@@ -21,12 +21,39 @@ class Database {
      * @return PDO
      */
     public static function getConnection(): PDO {
+        /**
+         * @var array{
+         *     ADMIN: array{
+         *         host:string,
+         *         dbname:string,
+         *         user:string,
+         *         password:string
+         *     },
+         *     USERS: array{
+         *         host:string,
+         *         dbname:string,
+         *         user:string,
+         *         password:string
+         *     }
+         * } $usersDB
+         */
         $usersDB = require __DIR__ . "/../env.php";
 
+        /**
+         * @var array{
+         *      host:string,
+         *      dbname:string,
+         *      user:string,
+         *      password:string,
+         * } $profil
+         */
         $profil = $usersDB['USERS'];
         
-        if(isset($_SESSION['user'])){
-            if($_SESSION['user']['role'] === 'ADMIN') {
+        /** @var array<string,string> $user */
+        $user = $_SESSION['user'];
+
+        if(isset($user['role'])){
+            if($user['role'] === 'ADMIN') {
                 $profil = $usersDB['ADMIN'];
             }
         }

@@ -29,7 +29,9 @@ class Banner {
             return null;
         }
 
+        /** @var array<string,string> $banner */
         $banner = $_SESSION['banner'];
+        
         unset($_SESSION['banner']);
         
         return $banner;

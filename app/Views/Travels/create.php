@@ -3,9 +3,14 @@
 use App\Entity\Agency;
 use App\Entity\Employee;
 
-/** @var Employee $employee */
-/** @var Agency[] $agencies */
 
+/**
+ * @var Employee $employee
+ * @var Agency[] $agencies
+ * @var array<string,string> $user
+ */
+
+$user = $_SESSION['user'];
 ?>
 <script src="/assets/javascript/travel.create.js" type="text/javascript" defer></script>
 <nav class="mb-4">
@@ -82,7 +87,7 @@ use App\Entity\Employee;
                 type="hidden"
                 name="employee_id"
                 id="employee_id"
-                value="<?= $_SESSION['user']['id'] ?>"
+                value="<?= $user['id'] ?>"
                 >
         </fieldset>
         <fieldset class="w-50">
