@@ -61,7 +61,14 @@ class AgenciesModel {
             return [];
         }
 
+
         $agencies = [];
+
+        /** @var array{
+         *      id:int,
+         *      city:string
+         * } $agency
+         */
         foreach($result as $agency){
             array_push($agencies, new Agency(
                 id: $agency['id'],
@@ -85,6 +92,12 @@ class AgenciesModel {
             'id' => $id
         ]);
 
+        /**
+         * @var array{
+         *      id:int,
+         *      city:string
+         * }|null $result
+         */
         $result = $query->fetch();
  
         if(!$result) {
@@ -120,7 +133,9 @@ class AgenciesModel {
     /**
      * Met à jour le nom d'une agence
      * 
-     * @param mixed $data
+     * @param array{
+     *      city:string
+     * } $data
      * @return bool
      */
     public function updateAgency(int $id, mixed $data): bool {

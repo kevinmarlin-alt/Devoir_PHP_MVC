@@ -34,9 +34,9 @@ class AgenciesController {
     /**
      * Retourne toutes les agences
      * 
-     * @return Agency[]|null
+     * @return Agency[]|array
      */
-    public function getAllAgencies(): array|null {
+    public function getAllAgencies(): array {
         return $this->agenciesModel->findAllAgencies();
     } 
 
@@ -54,18 +54,15 @@ class AgenciesController {
      * 
      * En fonction du nom de la ville uniquement
      * 
-     * @param array<string,mixed> $data
+     * @param array{
+     *      city:string
+     * } $data
      * @return void
      */
     public function createNewAgency(array $data): void {
-        /**
-         * @var string $city
-         */
+
+        /** @var string $city */
         $city = $data['city'];
-        // if(!$this->isUnique($city)) {
-        //     header('Location: /dashboard');
-        //     exit;
-        // }
 
         /** @var bool $add */
         $add = $this->agenciesModel->createAgency($city);
@@ -89,7 +86,9 @@ class AgenciesController {
      * Met à jour le nom d'une agence
      * 
      * @param int $id
-     * @param array<string,mixed> $data
+     * @param array{
+     *      city:string
+     * } $data
      * @return void
      */
     public function updateAgency(int $id, mixed $data): void {

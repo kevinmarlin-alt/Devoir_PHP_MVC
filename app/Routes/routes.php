@@ -23,20 +23,30 @@ $router = new Router();
  * Route d'entrée du site internet et redirection vers l'acceuil
  */
 $router->get('/', function () {
-    if(!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
+    /** @var string $http */
+    $http = $_SERVER['HTTP'];
+
+    /** @var string $uri */
+    $uri = "";
+    if(!empty($http) && ('on' == $http)) {
         $uri = 'https://';
     } else {
         $uri = 'http://';
     }
 
-    $uri .= $_SERVER['HTTP_HOST'];
+    /** @var string $http_host */
+    $http_host = $_SERVER['HTTP_HOST'];
+
+    $uri .= $http_host;
     header('Location: '.$uri.'/accueil');
 });
 
 /**
  * Routes de gestion du tableau de bord
+ * 
+ * @param Router $router
  */
-$router->group('/dashboard', function($router) {
+$router->group('/dashboard', function(Router $router) {
 
     $router->get('/', function () {
         AuthMiddleware::handle();
@@ -47,8 +57,10 @@ $router->group('/dashboard', function($router) {
 
 /**
  * Routes de gestion de connexion
+ * 
+ * @param Router $router
  */
-$router->group('/login', function($router){
+$router->group('/login', function(Router $router){
     
     $router->get('/', function() {
         if(isset($_SESSION['user'])) {
@@ -70,8 +82,10 @@ $router->get('/logout', function() {
 
 /**
  * Routes de gestion des employés
+ * 
+ * @param Router $router
  */
-$router->group('/employees', function ($router) {
+$router->group('/employees', function (Router $router) {
 
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
@@ -92,7 +106,10 @@ $router->group('/employees', function ($router) {
     $router->put('/update/:id', function(int $id, Request $request) {
         AuthMiddleware::handle();
         AdminMiddleware::handle();
+        
+        /** @var array<string,string> $data */
         $data = json_decode($request->getContent(), true);
+
         (new EmployeeController)->updatePassword($id, $data);
         
     });
@@ -100,13 +117,16 @@ $router->group('/employees', function ($router) {
 
 /**
  * Routes de gestion des agences
+ * 
+ * @param Router $router
  */
-$router->group('/agencies', function($router) {
+$router->group('/agencies', function(Router $router) {
 
     $router->get('/', function(Response $response) {
         AuthMiddleware::handle();
         AdminMiddleware::handle();
         header('Content-Type: application/json');
+
         $agencies = (new AgenciesController)->getAllAgencies();
     
         if ($agencies === []) {
@@ -120,13 +140,15 @@ $router->group('/agencies', function($router) {
         $response = array_map(fn(Agency $agency) => $agency->toArray(), $agencies);
         return json_encode($response);
 
-
     });
 
     $router->post('/create', function(Request $request) {
         AuthMiddleware::handle();
         AdminMiddleware::handle();
+
+        /** @var array{city:string} $data */
         $data = json_decode($request->getContent(), true);
+
         (new AgenciesController)->createNewAgency($data);
     });
 
@@ -138,12 +160,19 @@ $router->group('/agencies', function($router) {
 
     $router->get('/update/', function () {
         AuthMiddleware::handle();
-        (new DashboardController)->updateAgencyIndex($_GET['id']);
+
+        /** @var int $id */
+        $id = $_GET['id'];
+
+        (new DashboardController)->updateAgencyIndex($id);
     });
 
     $router->put('/update/:id', function (int $id, Request $request) {
         AuthMiddleware::handle();
+
+        /** @var array{city: string} $data */
         $data = json_decode($request->getContent(), true);
+
         (new AgenciesController)->updateAgency($id, $data);
         
     });
@@ -151,8 +180,10 @@ $router->group('/agencies', function($router) {
 
 /**
  * Routes de gestion des trajets
+ * 
+ * @param Router $router
  */
-$router->group(('/travels'), function($router) {
+$router->group(('/travels'), function(Router $router) {
 
     $router->get('/:id', function(int $id, Response $response) {
         AuthMiddleware::handle();
@@ -176,7 +207,11 @@ $router->group(('/travels'), function($router) {
 
     $router->get('/update/', function () {
         AuthMiddleware::handle();
-        (new TravelsControllers)->updateIndex($_GET['id']);
+
+        /** @var int $id */
+        $id = $_GET['id'];
+
+        (new TravelsControllers)->updateIndex($id);
     });
 
     $router->put('/update/:id', function (int $id, Request $request) {

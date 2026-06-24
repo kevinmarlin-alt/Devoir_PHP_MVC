@@ -33,13 +33,14 @@ class DashboardController extends Controller {
         $employees = (new EmployeeController)->getAllEmployees();
         $agencies = (new AgenciesController)->getAllAgencies();
         $travels = (new TravelsControllers)->getAllTravels();
-        if(!isset($_SESSION['user']['id'])) {
+
+        /** @var array<string,mixed> $user */
+        $user = $_SESSION['user'];
+        if(!isset($user['id'])) {
             exit;
         }
-        /**
-         * @var int $id
-         */
-        $id = $_SESSION['user']['id'];
+        /** @var int $id */
+        $id = $user['id'];
         $employee = (new EmployeeController)->getEmployeeById($id);
         $this->render(
             'Tableau de bord', 
@@ -55,7 +56,8 @@ class DashboardController extends Controller {
      * @return void
      */
     public function updateAgencyIndex(int $idAgency): void {
-        /** @var array{id:int, role:string} $user */
+
+        /** @var array<string,mixed> $user */
         $user = $_SESSION['user'];
 
         /** @var int $id */

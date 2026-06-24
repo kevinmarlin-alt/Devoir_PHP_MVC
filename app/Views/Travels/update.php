@@ -3,10 +3,14 @@ use App\Entity\Travel;
 use App\Entity\Agency;
 use App\Entity\Employee;
 
-/** @var Employee $employee */
-/** @var Agency[] $agencies */
-/** @var Travel $travel */
+/** 
+ * @var Employee $employee 
+ * @var Agency[] $agencies
+ * @var Travel $travel
+ * @var array<string,string> $user
+ */
 
+$user = $_SESSION['user'];
 ?>
 
 <script src="/assets/javascript/travel.update.js" type="text/javascript" defer></script>
@@ -163,7 +167,7 @@ use App\Entity\Employee;
                 type="hidden"
                 name="employee_id"
                 id="employee_id"
-                value="<?= $_SESSION['user']['id'] ?>"
+                value="<?= $user['id'] ?>"
                 >
             
         </fieldset>

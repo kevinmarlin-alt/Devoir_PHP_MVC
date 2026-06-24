@@ -49,6 +49,17 @@ class EmployeeModel {
             ":email" => $email
         ]);
 
+        /**
+         * @var array{
+         *      id:int,
+         *      lastname:string,
+         *      firstname:string,
+         *      phone:string,
+         *      email:string,
+         *      passeword:string,
+         *      role:string,
+         * }|false $result
+         */
         $result = $query->fetch();
 
         if(!$result) {
@@ -83,6 +94,17 @@ class EmployeeModel {
             ":id" => $id
         ]);
 
+        /**
+         * @var array{
+         *      id:int,
+         *      lastname:string,
+         *      firstname:string,
+         *      phone:string,
+         *      email:string,
+         *      passeword:string,
+         *      role:string,
+         * }|false $result
+         */
         $result = $query->fetch();
 
         if(!$result) {
@@ -120,6 +142,19 @@ class EmployeeModel {
         }
 
         $employees = [];
+
+
+        /**
+         * @var array{
+         *      id:int,
+         *      lastname:string,
+         *      firstname:string,
+         *      phone:string,
+         *      email:string,
+         *      passeword:string|null,
+         *      role:string,
+         * } $employee
+         */
         foreach($result as $employee) {
             array_push($employees, new Employee(
                 id: $employee['id'],

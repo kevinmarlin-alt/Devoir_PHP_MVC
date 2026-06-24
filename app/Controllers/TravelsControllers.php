@@ -12,6 +12,8 @@ namespace App\Controllers;
 use App\Core\Banner;
 use App\Core\Controller;
 use App\Entity\Travel;
+use App\Entity\Agency;
+use App\Entity\Employee;
 use App\Models\TravelsModel;
 use App\Models\AgenciesModel;
 
@@ -19,9 +21,7 @@ use App\Models\AgenciesModel;
  * Contrôleur des trajets
  */
 class TravelsControllers extends Controller {
-    /**
-     * @var TravelsModel $travelsModel
-     */
+    /** @var TravelsModel $travelsModel */
     private TravelsModel $travelsModel;
 
     /**
@@ -46,8 +46,23 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function createIndex(): void {
+
+        /** @var array<Agency> $agencies */
         $agencies = (new AgenciesModel)->findAllAgencies();
-        $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
+
+        /** @var Employee|null $employee */
+        $employee = null;
+
+        /** @var array<string,mixed> $user */
+        $user = $_SESSION['user'];
+
+        if(isset($user['id'])) {
+            /** @var int $id */
+            $id = $user['id'];
+            
+            $employee = (new EmployeeController)->getEmployeeById($id);
+        }
+
         $this->render(
             'Créer un trajet', 
             'Travels/create', 
@@ -62,8 +77,24 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function updateIndex(int $id): void {
+
+        /** @var array<Agency> $agencies */
         $agencies = (new AgenciesModel)->findAllAgencies();
-        $employee = (new EmployeeController)->getEmployeeById($_SESSION['user']['id']);
+
+        /** @var Employee|null $employee */
+        $employee = null;
+
+        /** @var array<string,mixed> $user */
+        $user = $_SESSION['user'];
+
+        if(isset($user['id'])) {
+            /** @var int $id */
+            $id = $user['id'];
+            
+            $employee = (new EmployeeController)->getEmployeeById($id);
+        }
+
+        /** @var Travel|null $travel */
         $travel = $this->getTravelById($id);
  
         $this->render(
@@ -81,7 +112,21 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function updateTravel(int $id, mixed $data): void {
-        $update = $this->travelsModel->updateTravel($id, $data);
+        /** 
+         * @var array{
+         *      departure_agency_id:int,
+         *      departure_date:string,
+         *      departure_time:string,
+         *      arrival_agency_id:int,
+         *      arrival_date:string,
+         *      arrival_time:string,
+         *      seats_total:int,
+         *      seats_available:int,
+         *      employee_id:int
+         * } $post
+         */
+        $post = $data;
+        $update = $this->travelsModel->updateTravel($id, $post);
 
         if($update) {
             Banner::add(
@@ -101,7 +146,21 @@ class TravelsControllers extends Controller {
      * @return void
      */
     public function createNewTravel(): void {
-        $add = $this->travelsModel->addTravel($_POST);
+        /** 
+         * @var array{
+         *      departure_agency_id:int,
+         *      departure_date:string,
+         *      departure_time:string,
+         *      arrival_agency_id:int,
+         *      arrival_date:string,
+         *      arrival_time:string,
+         *      seats_total:int,
+         *      seats_available:int,
+         *      employee_id:int
+         * } $post
+         */
+        $post = $_POST;
+        $add = $this->travelsModel->addTravel($post);
 
         if($add) {
             Banner::add(
