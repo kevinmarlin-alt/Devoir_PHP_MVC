@@ -7,7 +7,7 @@ use App\Entity\Agency;
 ?>
 
 <script src="/assets/javascript/agency.update.js" type="text/javascript" defer></script>
-<nav>
+<nav class="mb-4">
     <a href="/dashboard/#agencies">Retour</a>
 </nav>
 <h1 class="mb-4">Mettre à jour une agence</h1>

@@ -88,10 +88,10 @@ class TravelsControllers extends Controller {
         $user = $_SESSION['user'];
 
         if(isset($user['id'])) {
-            /** @var int $id */
-            $id = $user['id'];
+            /** @var int $idUser */
+            $idUser = $user['id'];
             
-            $employee = (new EmployeeController)->getEmployeeById($id);
+            $employee = (new EmployeeController)->getEmployeeById($idUser);
         }
 
         /** @var Travel|null $travel */
