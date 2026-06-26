@@ -11881,17 +11881,12 @@ main {
   min-height: 70vh;
 }
 
-.icons {
-  height: 1.1rem;
-  margin: 0 0.25rem;
-}
-.icons path {
-  fill: gray;
-}
-
 a {
   color: #0047c7;
   text-decoration: none;
+}
+a:hover {
+  color: #00497c;
 }
 
 h2, .h2 {
@@ -11932,8 +11927,20 @@ footer {
   text-decoration: underline;
 }
 
-.table {
-  fill: red;
+.icon {
+  height: 1.1rem;
+  margin: 0 0.25rem;
+}
+.icon path {
+  fill: #7d7d7d;
+}
+
+.icon:hover path {
+  fill: #384050;
+}
+
+.icon-delete:hover path {
+  fill: #cd2c2e;
 }
 
 /* Pages */
