@@ -7,38 +7,48 @@ use App\Entity\Employee;
 ?>
 
 <header class="mb-4">
-    <nav class="navbar bg-body-primary">
-        <div class="container-fluid">
-            <?php if(!isset($_SESSION['user'])): ?>
-                <a class="navbar-brand">Touche pas au klaxon</a>
-                <a href="/login" class="btn btn-primary">Connexion</a>
-            <?php else: ?>
-                    <?php 
-                    /** @var array<string,string> $user */
-                    $user = $_SESSION['user'];
-                    switch($user['role']): 
-                            case 'ADMIN': ?>
-                                <a href="/dashboard" class="navbar-brand">Touche pas au klaxon</a>
-                                <div class="d-flex align-items-center gap-4">
-                                    <a href="/dashboard/#users" class="btn btn-secondary">Utilisateurs</a>
-                                    <a href="/dashboard/#agencies" class="btn btn-secondary">Agences</a>
-                                    <a href="/dashboard/#travels" class="btn btn-secondary">trajets</a>
-                                    <p class="mb-0">Bonjour <?= $employee->getFullname() ?></p>
-                                    <a href="/logout" class="btn btn-primary">Déconnexion</a>
-                                </div> 
-                            <?php break;
-                            case 'USER': ?>
-                                <a class="navbar-brand">Touche pas au klaxon</a>
-                                <div class="d-flex align-items-center gap-4">
-                                    <a href="/travels/create" class="btn btn-secondary">Créer un trajet</a>
-                                    <p class="mb-0">Bonjour <?= $employee->getFullname() ?></p>
-                                    <a href="/logout" class="btn btn-primary">Déconnexion</a>
-                                </div>
-                            <?php break;
-                            endswitch; ?>
-                        
-            <?php endif; ?>        
-        </div>
-    </nav>
-    <?php require __DIR__ . "/../banner.php" ?>
+
+    <div class="container-lg">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <?php if(!isset($_SESSION['user'])): ?>
+                    <a class="navbar-brand">Touche pas au klaxon</a>
+                    <a href="/login" class="btn btn-primary">Connexion</a>
+                <?php else: ?>
+                        <?php
+                        /** @var array<string,string> $user */
+                        $user = $_SESSION['user'];
+                        switch($user['role']):
+                                case 'ADMIN': ?>
+                                    <a href="/dashboard" class="navbar-brand">Touche pas au klaxon</a>
+                                    <div class="d-flex align-items-center gap-4">
+                                        <ul class="navbar-nav gap-4">
+                                            <li class="nav-item">
+                                                <a href="/dashboard/#users" class="btn btn-secondary">Utilisateurs</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/dashboard/#agencies" class="btn btn-secondary">Agences</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/dashboard/#travels" class="btn btn-secondary">Trajets</a>
+                                            </li>
+                                        </ul>
+                                        <p class="mb-0">Bonjour <?= $employee->getFullname() ?></p>
+                                        <a href="/logout" class="btn btn-primary">Déconnexion</a>
+                                    </div>
+                                <?php break;
+                                case 'USER': ?>
+                                    <a class="navbar-brand">Touche pas au klaxon</a>
+                                    <div class="d-flex align-items-center gap-4">
+                                        <a href="/travels/create" class="btn btn-secondary">Créer un trajet</a>
+                                        <p class="mb-0">Bonjour <?= $employee->getFullname() ?></p>
+                                        <a href="/logout" class="btn btn-primary">Déconnexion</a>
+                                    </div>
+                                <?php break;
+                                endswitch; ?>
+        
+                <?php endif; ?>
+            </div>
+        </nav>
+    </div>
 </header>
