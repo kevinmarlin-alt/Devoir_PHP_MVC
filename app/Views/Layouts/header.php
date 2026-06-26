@@ -12,7 +12,7 @@ use App\Entity\Employee;
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <?php if(!isset($_SESSION['user'])): ?>
-                    <a class="navbar-brand">Touche pas au klaxon</a>
+                    <h1>Touche pas au klaxon</h1>
                     <a href="/login" class="btn btn-primary">Connexion</a>
                 <?php else: ?>
                         <?php
@@ -20,7 +20,9 @@ use App\Entity\Employee;
                         $user = $_SESSION['user'];
                         switch($user['role']):
                                 case 'ADMIN': ?>
-                                    <a href="/dashboard" class="navbar-brand">Touche pas au klaxon</a>
+                                    
+                                        <a href="/dashboard"><h1>Touche pas au klaxon</h1></a>
+                                    
                                     <div class="d-flex align-items-center gap-4">
                                         <ul class="navbar-nav gap-4">
                                             <li class="nav-item">
@@ -38,7 +40,7 @@ use App\Entity\Employee;
                                     </div>
                                 <?php break;
                                 case 'USER': ?>
-                                    <a class="navbar-brand">Touche pas au klaxon</a>
+                                    <h1>Touche pas au klaxon</h1>
                                     <div class="d-flex align-items-center gap-4">
                                         <a href="/travels/create" class="btn btn-secondary">Créer un trajet</a>
                                         <p class="mb-0">Bonjour <?= $employee->getFullname() ?></p>

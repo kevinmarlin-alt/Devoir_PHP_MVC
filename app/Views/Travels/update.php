@@ -13,22 +13,22 @@ use App\Entity\Employee;
 $user = $_SESSION['user'];
 ?>
 
-<script src="/assets/javascript/travel.update.js" type="text/javascript" defer></script>
+<script src="/assets/javascript/travel.update.js" defer></script>
 <nav class="mb-4">
     <a href="/">Accueil</a>
 </nav>
 
 <h2 class="mb-4">Mettre à jour le trajet</h2>
 
-<form action="#" method="" class="needs-validation" novalidate>
+<form action="#" class="needs-validation" novalidate>
     <div class="d-flex gap-4 mb-4">
         <fieldset class="w-50">
             <legend>Informations du trajet</legend>
             <div class="mb-3">
                 <label class="form-label" for="departure_agency_id">Départ</label><br>
                 <select class="form-control" name="departure_agency_id" id="departure_agency_id" required >
+                    <option value="0" disabled>Sélectionner une agence de départ</option>
                     <?php foreach($agencies as $agency): ?>
-                    
                         <?php if($travel->getDepartureAgency() === $agency->getCity()): ?>
                             <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>
                         <?php else: ?>
@@ -56,6 +56,7 @@ $user = $_SESSION['user'];
             <div class="mb-3">
                 <label class="form-label" for="arrival_agency_id">Arrivée</label><br>
                 <select class="form-control"  name="arrival_agency_id" id="arrival_agency_id" required >
+                    <option value="0" disabled>Sélectionner une agence d'arrivée</option>
                     <?php foreach($agencies as $agency): ?>
                         <?php if($travel->getArrivalAgency() === $agency->getCity()): ?>
                             <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>

@@ -11889,6 +11889,12 @@ a:hover {
   color: #00497c;
 }
 
+h1, .h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #00497c;
+}
+
 h2, .h2 {
   color: #384050;
 }
@@ -11901,13 +11907,8 @@ header {
   min-height: 10vh;
 }
 
-.navbar-brand {
-  font-weight: 700;
-  font-size: 2rem;
-  color: #00497c;
-}
-.navbar-brand:hover {
-  color: #384050;
+h1:hover, .h1:hover {
+  color: #0047c7;
   text-decoration: none;
 }
 

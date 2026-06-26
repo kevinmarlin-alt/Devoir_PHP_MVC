@@ -8,7 +8,7 @@ use App\Entity\Travel;
 
 $user = $_SESSION['user'];
 ?>
-<script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
+<script src="/assets/javascript/travel.table.js" defer></script>
 <h2>Trajets disponible</h2>
 <?php if($travels): ?>
 
@@ -77,7 +77,7 @@ $user = $_SESSION['user'];
 <?php endif; ?>
 
 <!-- Modal -->
-<div class="modal fade" id="travelDetailModal" tabindex="-1" aria-labelledby="Detail_of_travel" aria-hidden="true">
+<div class="modal fade" id="travelDetailModal" tabindex="-1" aria-hidden="true" aria-roledescription="modal">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
