@@ -26,6 +26,7 @@ $user = $_SESSION['user'];
             <div class="mb-3">
                 <label class="form-label" for="departure_agency_id">Départ</label><br>
                 <select class="form-control" name="departure_agency_id" id="departure_agency_id" required >
+                    <option value="0" disabled>Sélectionner une agence</option>
                     <?php foreach($agencies as $agency): ?>
                         <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
                     <?php endforeach; ?>
@@ -50,6 +51,7 @@ $user = $_SESSION['user'];
             <div class="mb-3">
                 <label class="form-label" for="arrival_agency_id">Arrivée</label><br>
                 <select class="form-control"  name="arrival_agency_id" id="arrival_agency_id" required >
+                    <option value="0" disabled>Sélectionner une agence</option>
                     <?php foreach($agencies as $agency): ?>
                         <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
                     <?php endforeach; ?>

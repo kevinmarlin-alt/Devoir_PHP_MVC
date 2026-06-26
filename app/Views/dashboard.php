@@ -3,28 +3,28 @@ use App\Entity\Travel;
 use App\Entity\Agency;
 use App\Entity\Employee;
 
-/** @var Employee[] $employees */
+/** @var Employee[]|array $employees */
 /** @var Employee $employee */
 /** @var Agency[] $agencies */
 /** @var Travel[] $travels */
 
 ?>
 
-<script src="/assets/javascript/travel.table.js" type="text/javascript" defer></script>
-<script src="/assets/javascript/agencies.table.js" type="text/javascript" defer></script>
-<script src="/assets/javascript/agencies.create.js" type="text/javascript" defer></script>
-<script src="/assets/javascript/employee.update.js" type="text/javascript" defer></script>
+<script src="/assets/javascript/travel.table.js" defer></script>
+<script src="/assets/javascript/agencies.table.js" defer></script>
+<script src="/assets/javascript/agencies.create.js" defer></script>
+<script src="/assets/javascript/employee.update.js" defer></script>
 
 <nav class="mb-4">
     <a href="/">Acceuil</a>
 </nav>
 
-<h1>Tableau de bord</h1>
+<h2>Tableau de bord</h2>
 <p class="mb-4" >Ce tableau de bord permet la gestion des informations pour les tarjets et leurs relations.</p>
 
 <div class="row mb-4">
     <section class="card p-4" id="travels">
-        <h2>Trajets</h2>
+        <h3>Trajets</h3>
         <?php if($travels): ?>
             <table class="table table-bordered text-center table-sm table-striped">
                 <tr class="table-primary">
@@ -76,7 +76,7 @@ use App\Entity\Employee;
 
 <div class="row gap-4">
     <section class="col card p-4" id="users">
-        <h2>Utilisateurs</h2>
+        <h3>Utilisateurs</h3>
         <?php if($employees): ?>
             <p>
                 <a class="employees__updatePwdCollapse--Btn" data-bs-toggle="collapse" href="#employeesPasswordCollapse" role="button" aria-expanded="false" aria-controls="employeesPasswordCollapse">
@@ -85,11 +85,12 @@ use App\Entity\Employee;
             </p>
             <div class="collapse w-50" id="employeesPasswordCollapse">
                 <div class="card card-body mb-4">
-                    <form action="#" method="" class="needs-validation" novalidate>
+                    <form action="#" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <div class="mb-3">
                                 <label class="form-label" for="email">Email</label><br>
                                 <select class="form-control" name="email" id="email" required >
+                                    <option value="0" disabled>Sélectionner un email</option>
                                     <?php foreach($employees as $employee): ?>
                                         <option value="<?= $employee->getId() ?>"><?= $employee->getEmail() ?></option>
                                     <?php endforeach; ?>
@@ -132,7 +133,7 @@ use App\Entity\Employee;
     </section>
     
     <section class="col-4 card p-4"  id="agencies">
-        <h2>Agences</h2>
+        <h3>Agences</h3>
         <p>
             <a class="" data-bs-toggle="collapse" href="#createAgencyCollapse" role="button" aria-expanded="false" aria-controls="createAgencyCollapse">
                 Créer une nouvelle agence
@@ -184,7 +185,7 @@ use App\Entity\Employee;
             </table>
 
             <!-- Confirmation delete agency Modal -->
-            <div class="modal fade" data-id-agency="" id="agencyDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticModalDeleteConfirmation" aria-hidden="true">
+            <div class="modal fade" data-id-agency="" id="agencyDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog  modal-dialog-centered">
                     <div class="modal-content">
                     <div class="modal-header">

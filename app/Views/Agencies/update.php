@@ -6,12 +6,12 @@ use App\Entity\Agency;
 
 ?>
 
-<script src="/assets/javascript/agency.update.js" type="text/javascript" defer></script>
+<script src="/assets/javascript/agency.update.js" defer></script>
 <nav class="mb-4">
     <a href="/dashboard/#agencies">Retour</a>
 </nav>
-<h1 class="mb-4">Mettre à jour une agence</h1>
-<form action="" class="w-50">
+<h2 class="mb-4">Mettre à jour une agence</h2>
+<form action="#" class="w-50">
     <div class="mb-3">
         <label for="city" class="form-label">Nom de la ville de l'agence</label>
         <input class="form-control" type="text" name="city" id="city" value="<?= $agency->getCity() ?>">
