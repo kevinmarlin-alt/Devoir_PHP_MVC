@@ -1,5 +1,5 @@
 # Devoir PHP MVC
-'Touche pas au klaxon' est un site intranet pour une entreprise cherchant à mettre en relation les employés de l'ensemble des agences du groupe, afin d'optimiser les déplacements entre agences en therme d'ocipation au sein des vhéhicules (covoiturage)
+« Touche pas au klaxon » est un site intranet conçu pour faciliter le covoiturage entre les employés des différentes agences du groupe, optimisant ainsi l’occupation des véhicules en fonction des besoins de chaque agence.
 
 # Fonctionnalités
 ## Visiteur
@@ -7,7 +7,7 @@
 - Consultation de la liste des trajets disponible en fonction du nombre de place disponible et la date du jour
 ## Employé connecté
 - Créer un nouveau trajet
-- Modifier ou supprimer un trajet s'il en est le proprietaire
+- Modifier ou supprimer un trajet s'il en est le propriétaire
 ## Administrateur
 - Accéder au tableau de bord
 - Supprimer des trajets
@@ -23,7 +23,7 @@
 
 # Installation
 
-1. Clonner le projet dans le dossier de votre choix
+1. Cloner le projet dans le dossier de votre choix
 ```bash
 git clone https://github.com/kevinmarlin-alt/Devoir_PHP_MVC.git
 ```
@@ -33,9 +33,9 @@ git clone https://github.com/kevinmarlin-alt/Devoir_PHP_MVC.git
 cd Devoir_PHP_MVC
 ```
 
-3. Intallation des dépendance avec `composer`
+3. Installation des dépendance avec `composer`
 
-Prérequis Composer doit être installé sur votre machine
+Pré requis Composer doit être installé sur votre machine
 ```bash
 composer install
 ```
@@ -43,7 +43,7 @@ composer install
 # Base de donnée
 1. Création de la base de donnée
 
-Dans le dossier `DATABASE`, executer le script SQL `klaxon_db.sql` dans l'outil de gestion MySQL que vous désirez, soit via le treminal ou bien à partir de phpmyadmin.
+Dans le dossier `DATABASE`, executer le script SQL `klaxon_db.sql` dans l'outil de gestion MySQL que vous désirez, soit via le terminal ou bien à partir de phpmyadmin.
 
 ⚠️ En prenant bien le soin de définir des mots de passe pour les deux utilisateurs 
 (klaxon_admin & klaxon_users) ⚠️
@@ -52,7 +52,7 @@ Dans le dossier `DATABASE`, executer le script SQL `klaxon_db.sql` dans l'outil 
 
 Executer le script SQL `klaxon_data.sql`
 
-# Environement
+# Environnement
 
 1. Créer un fichier dans le dossier `app`, nommer `env.php`
 
@@ -81,7 +81,7 @@ return $db;
 # Tests
 Des tests unitaires sont présent, permettant de garantir le bon fonctionnement du site avant son lancement.
 
-L'execussion des tests unitaires sont réalisés avec la commande suivante :
+L'exécution des tests unitaires sont réalisés avec la commande suivante :
 ```bash
 ./vendor/bin/phpunit
 ```
