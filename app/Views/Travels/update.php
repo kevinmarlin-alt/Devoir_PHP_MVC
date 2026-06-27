@@ -30,9 +30,9 @@ $user = $_SESSION['user'];
                     <option value="0" disabled>Sélectionner une agence de départ</option>
                     <?php foreach($agencies as $agency): ?>
                         <?php if($travel->getDepartureAgency() === $agency->getCity()): ?>
-                            <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>
+                            <option value="<?= $agency->getId() ?>" selected ><?= htmlspecialchars($agency->getCity()) ?></option>
                         <?php else: ?>
-                            <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                            <option value="<?= $agency->getId() ?>"><?= htmlspecialchars($agency->getCity()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
@@ -59,9 +59,9 @@ $user = $_SESSION['user'];
                     <option value="0" disabled>Sélectionner une agence d'arrivée</option>
                     <?php foreach($agencies as $agency): ?>
                         <?php if($travel->getArrivalAgency() === $agency->getCity()): ?>
-                            <option value="<?= $agency->getId() ?>" selected ><?= $agency->getCity() ?></option>
+                            <option value="<?= $agency->getId() ?>" selected ><?= htmlspecialchars($agency->getCity()) ?></option>
                         <?php else: ?>
-                            <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                            <option value="<?= $agency->getId() ?>"><?= htmlspecialchars($agency->getCity()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
@@ -73,11 +73,11 @@ $user = $_SESSION['user'];
                 <div class="d-flex gap-2">
                     <div class="w-50">
                         <label class="form-label" for="arrival_date">Date</label><br>
-                        <input class="form-control datetime-js" type="date" name="arrival_date" id="arrival_date" value="<?= $travel->getArrivalAt()->format('Y-m-d') ?>" required>
+                        <input class="form-control datetime-js" type="date" name="arrival_date" id="arrival_date" value="<?= htmlspecialchars($travel->getArrivalAt()->format('Y-m-d')) ?>" required>
                     </div>
                     <div class="w-50">
                         <label class="form-label" for="arrival_time">Heure</label><br>
-                        <input class="form-control datetime-js" type="time" name="arrival_time" id="arrival_time" value="<?= $travel->getArrivalAt()->format('H:i') ?>" required>
+                        <input class="form-control datetime-js" type="time" name="arrival_time" id="arrival_time" value="<?= htmlspecialchars($travel->getArrivalAt()->format('H:i')) ?>" required>
                     </div>
                 </div>
                 <div class="datetime-feedback feedback"></div>

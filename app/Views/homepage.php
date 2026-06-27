@@ -33,13 +33,13 @@ $user = $_SESSION['user'];
         /** @var Travel $travel */
         foreach($travels as $travel): ?>
             <tr data-id-travel="<?= $travel->getId() ?>">
-                <td><?= $travel->getDepartureAgency() ?></td>
-                <td><?= $travel->getDepartureAt()->format('d/m/Y') ?></td>
-                <td><?= $travel->getDepartureAt()->format('H:i') ?></td>
-                <td><?= $travel->getArrivalAgency() ?></td>
-                <td><?= $travel->getArrivalAt()->format('d/m/Y') ?></td>
-                <td><?= $travel->getArrivalAt()->format('H:i') ?></td>
-                <td><?= $travel->getSeatsAvailable() ?></td>
+                <td><?= htmlspecialchars($travel->getDepartureAgency()) ?></td>
+                <td><?= htmlspecialchars($travel->getDepartureAt()->format('d/m/Y')) ?></td>
+                <td><?= htmlspecialchars($travel->getDepartureAt()->format('H:i')) ?></td>
+                <td><?= htmlspecialchars($travel->getArrivalAgency()) ?></td>
+                <td><?= htmlspecialchars($travel->getArrivalAt()->format('d/m/Y')) ?></td>
+                <td><?= htmlspecialchars($travel->getArrivalAt()->format('H:i')) ?></td>
+                <td><?= htmlspecialchars($travel->getSeatsAvailable()) ?></td>
                 <?php if(isset($_SESSION['user'])): ?>
                     <td>
                         <!-- Read button -->

@@ -35,7 +35,7 @@ use App\Entity\Employee;
                                                 <a href="/dashboard/#travels" class="btn btn-secondary">Trajets</a>
                                             </li>
                                         </ul>
-                                        <p class="mb-0">Bonjour <?= $employee->getFullname() ?></p>
+                                        <p class="mb-0">Bonjour <?= htmlspecialchars($employee->getFullname()) ?></p>
                                         <a href="/logout" class="btn btn-primary">Déconnexion</a>
                                     </div>
                                 <?php break;
@@ -43,7 +43,7 @@ use App\Entity\Employee;
                                     <h1>Touche pas au klaxon</h1>
                                     <div class="d-flex align-items-center gap-4">
                                         <a href="/travels/create" class="btn btn-secondary">Créer un trajet</a>
-                                        <p class="mb-0">Bonjour <?= $employee->getFullname() ?></p>
+                                        <p class="mb-0">Bonjour <?= htmlspecialchars($employee->getFullname()) ?></p>
                                         <a href="/logout" class="btn btn-primary">Déconnexion</a>
                                     </div>
                                 <?php break;

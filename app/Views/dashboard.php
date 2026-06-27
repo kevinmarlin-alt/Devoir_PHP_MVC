@@ -41,14 +41,14 @@ use App\Entity\Employee;
                 </tr>
                 <?php foreach($travels as $travel): ?>
                     <tr data-id-travel=<?= $travel->getId() ?>>
-                        <td><?= $travel->getId() ?></td>
-                        <td><?= $travel->getDepartureAgency() ?></td>
-                        <td><?= $travel->getDepartureAt()->format('d/m/Y') ?></td>
-                        <td><?= $travel->getDepartureAt()->format('H:i') ?></td>
-                        <td><?= $travel->getArrivalAgency() ?></td>
-                        <td><?= $travel->getArrivalAt()->format('d/m/Y') ?></td>
-                        <td><?= $travel->getArrivalAt()->format('H:i') ?></td>
-                        <td><?= $travel->getSeatsAvailable() ?></td>
+                        <td><?= htmlspecialchars($travel->getId()) ?></td>
+                        <td><?= htmlspecialchars($travel->getDepartureAgency()) ?></td>
+                        <td><?= htmlspecialchars($travel->getDepartureAt()->format('d/m/Y')) ?></td>
+                        <td><?= htmlspecialchars($travel->getDepartureAt()->format('H:i')) ?></td>
+                        <td><?= htmlspecialchars($travel->getArrivalAgency()) ?></td>
+                        <td><?= htmlspecialchars($travel->getArrivalAt()->format('d/m/Y')) ?></td>
+                        <td><?= htmlspecialchars($travel->getArrivalAt()->format('H:i')) ?></td>
+                        <td><?= htmlspecialchars($travel->getSeatsAvailable()) ?></td>
                         <td>
                             <?php foreach($employees as $employee): ?>
                                 <?php if($employee->getId() === $travel->getEmployeeId()): ?>
@@ -92,7 +92,7 @@ use App\Entity\Employee;
                                 <select class="form-control" name="email" id="email" required >
                                     <option value="0" disabled>Sélectionner un email</option>
                                     <?php foreach($employees as $employee): ?>
-                                        <option value="<?= $employee->getId() ?>"><?= $employee->getEmail() ?></option>
+                                        <option value="<?= $employee->getId() ?>"><?= htmlspecialchars($employee->getEmail()) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -119,11 +119,11 @@ use App\Entity\Employee;
                 </tr>
                 <?php foreach($employees as $employee): ?>
                     <tr>
-                        <td><?= $employee->getId() ?></td>
-                        <td><?= $employee->getLastname() ?></td>
-                        <td><?= $employee->getFirstname() ?></td>
-                        <td><?= $employee->getPhone() ?></td>
-                        <td><?= $employee->getEmail() ?></td>
+                        <td><?= htmlspecialchars($employee->getId()) ?></td>
+                        <td><?= htmlspecialchars($employee->getLastname()) ?></td>
+                        <td><?= htmlspecialchars($employee->getFirstname()) ?></td>
+                        <td><?= htmlspecialchars($employee->getPhone()) ?></td>
+                        <td><?= htmlspecialchars($employee->getEmail()) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
