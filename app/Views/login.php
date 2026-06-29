@@ -1,6 +1,9 @@
 <?php
 /** @var string|null $error */
 ?>
+<nav class="mb-4">
+    <a href="/">Retour</a>
+</nav>
 
 <div class="d-flex justify-content-center">
     <div class="card w-50">
