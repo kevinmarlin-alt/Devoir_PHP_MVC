@@ -43,7 +43,7 @@ composer install
 # Base de donnée
 1. Création de la base de donnée
 
-Dans le dossier `DATABASE`, executer le script SQL `klaxon_db.sql` dans l'outil de gestion MySQL que vous désirez, soit via le terminal ou bien à partir de phpmyadmin.
+Dans le dossier `DATABASE`, executer le script SQL `klaxon_db.sql` dans l'outil de gestion MySQL que vous désirez, soit via le terminal ou bien à partir de phpmyadmin par exemple.
 
 ⚠️ En prenant bien le soin de définir des mots de passe pour les deux utilisateurs 
 (klaxon_admin & klaxon_users) ⚠️
@@ -95,6 +95,7 @@ Pour visualiser le site intranet en local, il faut au préalable créer un fichi
 
 
 1. Démarrer un serveur php local avec la commande suivante :
+(indiqué le port de votre choix)
 ```bash
 php -S localhost:8000 -t public
 ```
@@ -103,4 +104,16 @@ php -S localhost:8000 -t public
 
  http://localhost:8000 
 
- # 💃🏻🎉
+  💃🏻🎉
+
+ ## Tests et lancement
+
+ Il est possible de combiner les commandes de test et de lancement afin d'effecturer une vérification avant le démarage du serveur.
+ 
+ Celui-ci ne démarrera pas si les tests échouent.
+
+ Vouc pouvez lancer la commande suivante :
+
+ ```bash
+./vendor/bin/phpunit --testdox && php -S localhost:8000 -t public
+```
