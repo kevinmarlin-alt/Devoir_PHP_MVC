@@ -88,11 +88,11 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON klaxon.travels TO 'users_role';
 
 -- Create user ADMIN
 DROP USER IF EXISTS 'klaxon_admin'@'localhost';
-CREATE USER 'klaxon_admin'@'localhost' IDENTIFIED BY 'admin3322';
+CREATE USER 'klaxon_admin'@'localhost' IDENTIFIED BY '******';
 
 -- Create user USERS
 DROP USER  IF EXISTS 'klaxon_users'@'localhost';
-CREATE USER 'klaxon_users'@'localhost' IDENTIFIED BY 'users3322';
+CREATE USER 'klaxon_users'@'localhost' IDENTIFIED BY '******';
 
 -- Attribute grants
 GRANT 'admin_role' TO 'klaxon_admin'@'localhost';

@@ -28,7 +28,7 @@ $user = $_SESSION['user'];
                 <select class="form-control" name="departure_agency_id" id="departure_agency_id" required >
                     <option value="0" disabled>Sélectionner une agence</option>
                     <?php foreach($agencies as $agency): ?>
-                        <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                        <option value="<?= $agency->getId() ?>"><?= htmlspecialchars($agency->getCity()) ?></option>
                     <?php endforeach; ?>
                 </select>
                 <div class="invalid-feedback">
@@ -53,7 +53,7 @@ $user = $_SESSION['user'];
                 <select class="form-control"  name="arrival_agency_id" id="arrival_agency_id" required >
                     <option value="0" disabled>Sélectionner une agence</option>
                     <?php foreach($agencies as $agency): ?>
-                        <option value="<?= $agency->getId() ?>"><?= $agency->getCity() ?></option>
+                        <option value="<?= $agency->getId() ?>"><?= htmlspecialchars($agency->getCity()) ?></option>
                     <?php endforeach; ?>
                 </select>
                 <div class="invalid-feedback">
@@ -101,7 +101,7 @@ $user = $_SESSION['user'];
                     type="text"
                     name="firstname"
                     id="firstname"
-                    value="<?= htmlspecialchars($employee->getFirstname()) ?>"
+                    value="<?= $employee->getFirstname() ?>"
                     disabled
                     >
             </div>
@@ -111,7 +111,7 @@ $user = $_SESSION['user'];
                     type="text"
                     name="lastname"
                     id="lastname"
-                    value="<?= htmlspecialchars($employee->getLastname()) ?>"
+                    value="<?= $employee->getLastname() ?>"
                     disabled
                 >
             </div>
@@ -122,7 +122,7 @@ $user = $_SESSION['user'];
                     type="email"
                     name="email"
                     id="email"
-                    value="<?= htmlspecialchars($employee->getEmail()) ?>"
+                    value="<?= $employee->getEmail() ?>"
                     disabled
                     >
             </div>
@@ -133,7 +133,7 @@ $user = $_SESSION['user'];
                     type="tel"
                     name="phone"
                     id="phone"
-                    value="<?= htmlspecialchars($employee->getPhone()) ?>"
+                    value="<?= $employee->getPhone() ?>"
                     disabled
                     >
             </div>

@@ -117,7 +117,7 @@ class EmployeeModel {
             firstname: $result['firstname'],
             phone: $result['phone'],
             email: $result['email'],
-            password: $result['passeword'],
+            password: $result['passeword'] ?? "",
             role: $result['role']
         );
 
@@ -151,7 +151,7 @@ class EmployeeModel {
          *      firstname:string,
          *      phone:string,
          *      email:string,
-         *      passeword:string|null,
+         *      passeword:string,
          *      role:string,
          * } $employee
          */
